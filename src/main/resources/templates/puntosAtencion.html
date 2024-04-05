@@ -15,6 +15,7 @@
                 <th>ID</th>
                 <th>tipo de punto</th>
                 <th>oficina</th>
+                <th>Accion</th>
             </tr>
 
         </thead>
@@ -22,7 +23,12 @@
             <tr>
                 <td th:text="${puntoAtencion.id}"></td>
                 <td th:text="${puntoAtencion.tipo_punto}"></td>
-                <td th:text="${puntoAtencion.oficina_id}"></td>
+                <td th:text="${puntoAtencion.getIdOficinaAsociada()}"></td>
+                <td>
+                
+                <a th:href="@{puntosAtencion/{id}/delete(id=${puntoAtencion.id})}"
+                    onclick="return confirm('¿Estás seguro de borrar este punto de atencion?')">Eliminar punto</a>
+                </td>
             </tr>
 
         </th:block>

@@ -51,6 +51,10 @@ public class PuntoAtencion {
     public void setOficina(Oficina oficina_id) {
         this.oficina_id = oficina_id;
     }
+
+    public int getIdOficinaAsociada(){
+        return this.oficina_id.getId();
+    }
     
     
 }
