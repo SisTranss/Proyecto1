@@ -22,7 +22,7 @@ public interface PuntoAtencionRepository extends JpaRepository<PuntoAtencion, In
 
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO puntos_atencion (id, tipo_punto, oficina_id) VALUES (bancandes_sequence.nextval, :tipo_punto, :oficina_id)", nativeQuery = true)
+    @Query(value = "INSERT INTO puntos_atencion (id, tipo_punto, oficina_id) VALUES (general_seq.nextval, :tipo_punto, :oficina_id)", nativeQuery = true)
     void insertarPuntoAtencion(@Param("tipo_punto") String tipo_punto, @Param("oficina_id") int oficina_id);
 
     @Modifying

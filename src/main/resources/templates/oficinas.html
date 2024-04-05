@@ -19,7 +19,7 @@
                     <th>ciudad</th>
                     <th>direccion</th>
                     <th>numero puntos atencion</th>
-                    <th>numero documento gerente</th>
+                    <th>numero ID gerente</th>
                     <th>acciones</th>
                 </tr>
             </thead>
@@ -31,7 +31,7 @@
                     <td th:text="${oficina.ciudad}"></td>
                     <td th:text="${oficina.direccion}"></td>
                     <td th:text="${oficina.numeroPuntosAt}"></td>
-                    <td th:text="${oficina.num_doc_gerente_oficina}"></td>
+                    <td th:text="${oficina.getIDGerenteAsociado()}"></td>
                     <td>
                         <p>Editar</p>
                         <p>Borrar</p>

@@ -95,6 +95,10 @@ public class Oficina {
         this.num_doc_gerente_oficina = num_doc_gerente_oficina;
     }
 
+    public int getIDGerenteAsociado(){
+        return this.getNum_doc_gerente_oficina().getNum_id();
+    }
+
     
     
 }

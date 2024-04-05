@@ -29,7 +29,7 @@ public class OficinaController {
 
     @PostMapping("oficinas/new/save")
     public String oficinaGuardar(@ModelAttribute Oficina oficina) {
-        oficinaRepository.insertarOficina((int)(Math.random()*10+1), oficina.getNombre(), oficina.getDepartamento(), oficina.getCiudad(),
+        oficinaRepository.insertarOficina(oficina.getNombre(), oficina.getDepartamento(), oficina.getCiudad(),
                 oficina.getDireccion(), oficina.getNumeroPuntosAt(),
                 oficina.getNum_doc_gerente_oficina().getNum_id());
         return "redirect:/oficinas";
