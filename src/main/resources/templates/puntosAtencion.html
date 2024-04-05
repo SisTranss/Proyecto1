@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puntos de atencion</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+</head>
+<body>
+  <div>
+    <h1>Lista de puntos de atencion</h1>
+    <table class = "table table-hover table bordered">
+        <thead class = "thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>tipo de punto</th>
+                <th>oficina</th>
+            </tr>
+
+        </thead>
+        <th:block th:each = "puntoAtencion:${puntosAtencion}" >
+            <tr>
+                <td th:text="${puntoAtencion.id}"></td>
+                <td th:text="${puntoAtencion.tipo_punto}"></td>
+                <td th:text="${puntoAtencion.oficina_id}"></td>
+            </tr>
+
+        </th:block>
+    </table>
+    <div>
+        <a th:href="@{puntosAtencion/new}" class="btn btn-primary">Crear punto de atencion</a>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -21,10 +21,10 @@ public interface OficinaRepository extends JpaRepository<Oficina, Integer> {
 
     @Modifying
     @Transactional
-    @Query(value = "INSERT into oficinas (id, nombre, departamento, ciudad, direccion, numero_puntos_at, num_doc_gerente_oficina) VALUES (bancandes_sequence.nexval, :nombre, :departamento, :ciudad, :direccion, :numeroPuntosAtencion, :num_doc_gerente_oficina))", nativeQuery = true)
-    void insertarOficina(@Param("nombre") String nombre, @Param("departamento") String departamento,
+    @Query(value = "INSERT into oficinas (id, nombre, departamento, ciudad, direccion, numero_puntos_at, num_doc_gerente_oficina) VALUES (:id, :nombre, :departamento, :ciudad, :direccion, :numero_puntos_at, :num_doc_gerente_oficina)", nativeQuery = true)
+    void insertarOficina(@Param("id") Integer id, @Param("nombre") String nombre, @Param("departamento") String departamento,
             @Param("ciudad") String ciudad, @Param("direccion") String direccion,
-            @Param("numeroPuntosAt") Integer numeroPuntosAt, @Param("num_doc_gerente_oficina") int num_doc_gerente_oficina);
+            @Param("numero_puntos_at") int numeroPuntosAt, @Param("num_doc_gerente_oficina") int num_doc_gerente_oficina);
 
             
 
@@ -41,9 +41,5 @@ public interface OficinaRepository extends JpaRepository<Oficina, Integer> {
     @Transactional
     @Query(value = "DELETE FROM oficinas WHERE id =:id", nativeQuery = true)     
     void eliminarOficina(@Param("id") int id);
-
-    @Query(value = "SELECT cargo FROM empleados EM"+//
-                   " WHERE EM.numeroid =:numeroid ", nativeQuery = true)     
-    String comprobarGerenteOficina(@Param("numeroid") int numeroid);
 
 }

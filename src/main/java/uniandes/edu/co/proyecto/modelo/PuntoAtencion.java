@@ -19,11 +19,11 @@ public class PuntoAtencion {
     
     @ManyToOne
     @JoinColumn(name = "oficina_id", referencedColumnName = "id")
-    private Oficina oficina;
+    private Oficina oficina_id;
 
-    public PuntoAtencion(String tipo_punto, Oficina oficina) {
+    public PuntoAtencion(String tipo_punto, Oficina oficina_id) {
         this.tipo_punto = tipo_punto;
-        this.oficina = oficina;
+        this.oficina_id = oficina_id;
     }
 
     public PuntoAtencion(){;}
@@ -45,13 +45,12 @@ public class PuntoAtencion {
     }
 
     public Oficina getOficina() {
-        return oficina;
+        return oficina_id;
     }
 
-    public void setOficina(Oficina oficina) {
-        this.oficina = oficina;
+    public void setOficina(Oficina oficina_id) {
+        this.oficina_id = oficina_id;
     }
-
     
     
 }

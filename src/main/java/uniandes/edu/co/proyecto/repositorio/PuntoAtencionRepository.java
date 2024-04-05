@@ -34,4 +34,6 @@ public interface PuntoAtencionRepository extends JpaRepository<PuntoAtencion, In
     @Transactional
     @Query(value = "DELETE FROM puntos_atencion WHERE id =:id", nativeQuery = true)     
     void eliminarPuntoAtencion(@Param("id") int id);
+
+
 }

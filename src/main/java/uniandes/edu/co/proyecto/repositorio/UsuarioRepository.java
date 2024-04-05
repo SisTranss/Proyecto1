@@ -22,9 +22,10 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
 
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO usuarios (tipoDoc, numId, nombre, email, nacionalidad, telefono, tipoUsuario,lugar) VALUES (general_seq.nextval, :tipoDoc, :numId, :nombre, :email, :nacionalidad, :telefono, :tipoUsuario, :lugar", nativeQuery = true)
-    void insertarUsuario(@Param("numId") int numId,@Param("nombre") String nombre,@Param("email") String email,
-                        @Param("nacionalidad") String nacionalidad,@Param("telefono") int telefono,@Param("tipoUsuario") int tipoUsuario,@Param("lugar") int lugar);
+    @Query(value = "INSERT INTO usuarios (id, num_Id, nombre, email, nacionalidad, telefono, tipo_Usuario,lugar,login, palabra_Clave, tipo_Doc) VALUES (general_seq.nextval, :numId, :nombre, :email, :nacionalidad, :telefono, :tipoUsuario, :lugar, :login, :palabraClave, :tipoDoc)", nativeQuery = true)
+    void insertarUsuario(@Param("numId") int numId, @Param("nombre") String nombre,@Param("email") String email,
+                        @Param("nacionalidad") String nacionalidad,@Param("telefono") int telefono,@Param("tipoUsuario") int tipoUsuario,@Param("lugar") int lugar, @Param("login") String login, @Param("palabraClave")String palabraClave,
+                        @Param("tipoDoc")String tipoDoc);
 
     @Modifying
     @Transactional
