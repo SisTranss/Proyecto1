@@ -5,16 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BancaAndes</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
-    <div class="container mx-auto w-25">
-        <h1>BancAndes</h1>
-        <img th:src="@{/images/image.png}" with="250"/>
-        <div>
-            <a th:href="@{lugares}" class="btn btn-primary">Lugares</a>
-            <a th:href="@{/usuarios}" class="btn btn-primary">Usuarios</a>
-            <a th:href="@{/oficinas}" class="btn btn-primary">Oficinas</a>
-            <a th:href="@{/puntosAtencion}" class="btn btn-primary">Puntos de atencion</a>
+    <header id="header">
+        <h1 style="padding: 10px;">BancaAndes</h1>
+    </header>
+    <div id="divIndex">
+        <img th:src="@{/images/image.png}" with="250" id="LogoMain"/>
+        
+        <div id="Form">
+            <form>
+                <div>
+                    <label for="name" style="font-size: 30px;">Usuario:</label>
+                    <input type="text" id="name" name="user_name" autocomplete="off"/>
+                </div>
+                <br>
+                <div>
+                    <label for="password">
+                        Contraseña: <input type="password" id="password" name="user_password" autocomplete="off"/>
+                    </label>
+                </div>
+                <br>
+                <a class="btn btn-success" style="color: white; height: 50px; width: 100px; align-items: center; font-size: 20px;" onclick=" ">Ingresar</a>
+            </form>
         </div>
     </div> 
 
