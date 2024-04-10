@@ -1,6 +1,5 @@
 package uniandes.edu.co.proyecto.modelo;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,8 +13,9 @@ import jakarta.persistence.Table;
 public class Usuario {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private Integer id;
+    @OneToOne
+    @JoinColumn(name = "Id", referencedColumnName = "Id")
+    private Login login;
     
     @OneToOne
     @JoinColumn(name = "lugar")
@@ -27,8 +27,6 @@ public class Usuario {
     private String nacionalidad;
     private int telefono;
     private int tipoUsuario;
-    private String login;
-    private String palabraClave;
     private String tipoDoc;
 
 
@@ -43,17 +41,15 @@ public class Usuario {
         this.telefono = telefono;
         this.tipoUsuario = tipoUsuario;
         this.lugar = lugar;
-        this.login = login;
-        this.palabraClave = palabraClave;
         this.tipoDoc = tipoDoc;
     }
 
-    public Integer getId() {
-        return id;
+    public Long getId() {
+        return login.getId();
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(Long id) {
+        login.setId(id);
     }
 
     public Integer getNum_id() {
@@ -110,22 +106,6 @@ public class Usuario {
 
     public void setLugar(Lugar lugar) {
         this.lugar = lugar;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getPalabraClave() {
-        return palabraClave;
-    }
-
-    public void setPalabraClave(String palabraClave) {
-        this.palabraClave = palabraClave;
     }
 
     public String getTipoDoc() {
