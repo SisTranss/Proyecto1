@@ -21,7 +21,6 @@ public class Usuario {
     @JoinColumn(name = "lugar")
     private Lugar lugar;
     
-    private int num_id;
     private String nombre;
     private String email;
     private String nacionalidad;
@@ -32,9 +31,9 @@ public class Usuario {
 
     public Usuario(){;}
 
-    public Usuario(Integer num_id, String nombre, String email, String nacionalidad, int telefono, int tipoUsuario,
-            Lugar lugar, String login, String palabraClave, String tipoDoc) {
-        this.num_id = num_id;
+    public Usuario(Long num_id, String nombre, String email, String nacionalidad, int telefono, int tipoUsuario,
+            Lugar lugar, String tipoDoc) {
+        login.setId(num_id);
         this.nombre = nombre;
         this.email = email;
         this.nacionalidad = nacionalidad;
@@ -52,11 +51,11 @@ public class Usuario {
         login.setId(id);
     }
 
-    public Integer getNum_id() {
+    public Long getNum_id() {
         return num_id;
     }
 
-    public void setNum_id(Integer num_id) {
+    public void setNum_id(Long num_id) {
         this.num_id = num_id;
     }
 
