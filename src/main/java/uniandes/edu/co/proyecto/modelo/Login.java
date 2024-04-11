@@ -14,7 +14,7 @@ public class Login {
     private LoginPk loginPk;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     public String getLogin() {
         return loginPk.getUsername();
@@ -33,11 +33,11 @@ public class Login {
     }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        id = id;
     }
 
     
