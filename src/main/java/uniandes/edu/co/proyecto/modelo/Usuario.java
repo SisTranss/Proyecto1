@@ -1,8 +1,7 @@
 package uniandes.edu.co.proyecto.modelo;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
@@ -14,8 +13,8 @@ public class Usuario {
 
     @Id
     @OneToOne
-    @JoinColumn(name = "Id", referencedColumnName = "Id")
-    private Login login;
+    @JoinColumn(name = "id", referencedColumnName = "id")
+    private Login id;
     
     @OneToOne
     @JoinColumn(name = "lugar")
@@ -27,13 +26,14 @@ public class Usuario {
     private int telefono;
     private int tipoUsuario;
     private String tipoDoc;
+    private String numDoc;
 
 
     public Usuario(){;}
 
-    public Usuario(Long num_id, String nombre, String email, String nacionalidad, int telefono, int tipoUsuario,
-            Lugar lugar, String tipoDoc) {
-        login.setId(num_id);
+    public Usuario(Login idLogin, String nombre, String email, String nacionalidad, int telefono, int tipoUsuario,
+            Lugar lugar, String tipoDoc, String numDoc) {
+        this.id = idLogin;
         this.nombre = nombre;
         this.email = email;
         this.nacionalidad = nacionalidad;
@@ -41,22 +41,23 @@ public class Usuario {
         this.tipoUsuario = tipoUsuario;
         this.lugar = lugar;
         this.tipoDoc = tipoDoc;
+        this.numDoc = numDoc;
     }
 
-    public Long getId() {
-        return login.getId();
+    public Login getId() {
+        return id;
     }
 
-    public void setId(Long id) {
-        login.setId(id);
+    public void setId(Login id) {
+        this.id = id;
     }
 
-    public Long getNum_id() {
-        return num_id;
+    public Lugar getLugar() {
+        return lugar;
     }
 
-    public void setNum_id(Long num_id) {
-        this.num_id = num_id;
+    public void setLugar(Lugar lugar) {
+        this.lugar = lugar;
     }
 
     public String getNombre() {
@@ -99,14 +100,6 @@ public class Usuario {
         this.tipoUsuario = tipoUsuario;
     }
 
-    public Lugar getLugar() {
-        return lugar;
-    }
-
-    public void setLugar(Lugar lugar) {
-        this.lugar = lugar;
-    }
-
     public String getTipoDoc() {
         return tipoDoc;
     }
@@ -115,6 +108,12 @@ public class Usuario {
         this.tipoDoc = tipoDoc;
     }
 
-    
+    public String getNumDoc() {
+        return numDoc;
+    }
+
+    public void setNumDoc(String numDoc) {
+        this.numDoc = numDoc;
+    }
 
 }   
