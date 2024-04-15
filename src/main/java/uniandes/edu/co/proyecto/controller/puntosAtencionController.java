@@ -1,6 +1,6 @@
 package uniandes.edu.co.proyecto.controller;
 
-//import java.util.Collection;
+import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import uniandes.edu.co.proyecto.modelo.Oficina;
+import uniandes.edu.co.proyecto.modelo.OperacionPrestamo;
 //import uniandes.edu.co.proyecto.modelo.Operacion_cuenta;
-//import uniandes.edu.co.proyecto.modelo.Operacion_prestamo;
 import uniandes.edu.co.proyecto.modelo.PuntoAtencion;
 import uniandes.edu.co.proyecto.repositorio.OficinaRepository;
 //import uniandes.edu.co.proyecto.modelo.Transaccion;
@@ -72,28 +72,23 @@ public class puntosAtencionController {
 
     }
 
-    /* 
+     
     @GetMapping("/puntosAtencion/{id}/delete")
     public String puntoAtencionEliminar(@PathVariable("id") int id){
 
-        Collection<Transaccion> transacciones = puntoAtencionRepository.darTransaccionesPunto(id);
-        Collection<Operacion_cuenta> opCuentas = puntoAtencionRepository.darOperacionesCuentaPunto(id);
-        Collection<Operacion_prestamo> opPrestamos = puntoAtencionRepository.darOperacionesPrestamosPunto(id);
+        //Collection<Transaccion> transacciones = puntoAtencionRepository.darTransaccionesPunto(id);
+        //Collection<Operacion_cuenta> opCuentas = puntoAtencionRepository.darOperacionesCuentaPunto(id);
+        Collection<OperacionPrestamo> opPrestamos = puntoAtencionRepository.darOperacionesPrestamosPunto(id);
 
-        if(transacciones.isEmpty() && opCuentas.isEmpty() && opPrestamos.isEmpty()){
+        if(opPrestamos.isEmpty())
             puntoAtencionRepository.eliminarPuntoAtencion(id);
-            return "redirect:/puntosAtencion";
-        }
-        else{
-            return "redirect:/puntosAtencion";
-        } 
-         
+        return "redirect:/puntosAtencion";
     }
-    */
-
+    /*
     @GetMapping("/puntosAtencion/{id}/delete")
     public String puntoAtencionEliminar(@PathVariable("id") int id){
         puntoAtencionRepository.eliminarPuntoAtencion(id);
         return "redirect:/puntosAtencion";
     }
+     */
 }
