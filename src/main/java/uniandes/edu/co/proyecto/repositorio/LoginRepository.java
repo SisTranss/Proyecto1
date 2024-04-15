@@ -8,22 +8,22 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import uniandes.edu.co.proyecto.modelo.Login;
+import uniandes.edu.co.proyecto.modelo.clsLogin;
 
 
-public interface LoginRepository extends JpaRepository<Login, Integer>{
+public interface LoginRepository extends JpaRepository<clsLogin, Integer>{
     @Query(value = "SELECT * FROM logins",nativeQuery = true)
-    Collection<Login> darLogins();
+    Collection<clsLogin> darLogins();
 
     @Query(value = "SELECT id FROM logins WHERE login = :login AND password = :password",nativeQuery = true)
     Integer buscarLogin(@Param("login") String login,@Param("password") String password);
 
     @Query(value = "SELECT * FROM logins WHERE id =:id",nativeQuery = true)
-    Login darLogin(@Param("id") int id);
+    clsLogin darLogin(@Param("id") int id);
 
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO logins (id,login, password) VALUES (general_seq.nextval, (general_sequence.nextval, :login, :password)", nativeQuery = true)
+    @Query(value = "INSERT INTO logins (id,login, password) VALUES (general_seq.NEXTVAL, :login, :password)", nativeQuery = true)
     void insertarLogin(@Param("login") String login,@Param("password") String password);
 
     @Modifying

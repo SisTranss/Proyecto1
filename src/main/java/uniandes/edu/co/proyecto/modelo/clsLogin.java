@@ -8,7 +8,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "logins")
-public class Login {
+public class clsLogin {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,12 +18,12 @@ public class Login {
     private String password;
 
 
-    public Login(String login, String password) {
+    public clsLogin(String login, String password) {
        this.login = login;
        this.password = password;
     }
 
-    public Login() {
+    public clsLogin() {;
     }
 
     public int getId() {
@@ -36,12 +36,12 @@ public class Login {
     }
 
 
-    public String getlogin() {
+    public String getLogin() {
         return login;
     }
 
 
-    public void setlogin(String login) {
+    public void setLogin(String login) {
         this.login = login;
     }
 

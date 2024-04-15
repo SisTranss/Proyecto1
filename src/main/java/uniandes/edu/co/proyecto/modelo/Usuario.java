@@ -18,7 +18,7 @@ public class Usuario {
     @OneToOne(fetch = FetchType.LAZY) 
     @MapsId 
     @JoinColumn(name = "id")
-    private Login login;
+    private clsLogin login;
     
     private String nombre;
     private String email;
@@ -35,7 +35,7 @@ public class Usuario {
 
     public Usuario(){;}
 
-    public Usuario(Login login, String nombre, String email, String nacionalidad, String telefono,
+    public Usuario(clsLogin login, String nombre, String email, String nacionalidad, String telefono,
             int tipoUsuario, String tipoDoc, String numDoc, int codigoPostal, String direccion, String ciudad,
             String departamento) {
         this.login = login;
@@ -60,11 +60,11 @@ public class Usuario {
         this.id = id;
     }
 
-    public Login getLogin() {
+    public clsLogin getLogin() {
         return login;
     }
 
-    public void setLogin(Login login) {
+    public void setLogin(clsLogin login) {
         this.login = login;
     }
 

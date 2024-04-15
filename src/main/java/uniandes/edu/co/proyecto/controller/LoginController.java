@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import uniandes.edu.co.proyecto.modelo.Login;
+import uniandes.edu.co.proyecto.modelo.clsLogin;
 import uniandes.edu.co.proyecto.repositorio.LoginRepository;
 
 @Controller
@@ -26,37 +27,31 @@ public class LoginController {
     @GetMapping("/login")
     public String validarLogin(@RequestParam String login, @RequestParam String password, Model model) {
         Integer id = loginRepository.buscarLogin(login, password);
-        System.out.println(id);
         if (id != null) {
-            model.addAttribute("login", loginRepository.darLogin(id));
-            return "login";
+            model.addAttribute("clsLogin", loginRepository.darLogin(id));
+            return "GeneralHome";
         } else {
             return "redirect:/";
         }        
     }   
 
-    @GetMapping("/")
-    public String home() {
-    return "index";
-    }
-
     @GetMapping("/logins/new")
     public String loginForm(Model model) {
-        model.addAttribute("login", new Login());
+        model.addAttribute("clsLogin", new clsLogin());
         return "loginNuevo";
     }
 
     @PostMapping("/logins/new/save")
-    public String loginGuardar(@ModelAttribute Login login) {
-        loginRepository.insertarLogin(login.getlogin(),login.getPassword());
-        return "redirect:/logins";
+    public String loginGuardar(@ModelAttribute clsLogin login, RedirectAttributes redirectAttributes) {
+        loginRepository.insertarLogin(login.getLogin(),login.getPassword());
+        return "usuarioNuevo";
     }
 
     @GetMapping("/logins/{id}/edit")
     public String loginEditarForm(@PathVariable("id") int id, Model model) {
-        Login login = loginRepository.darLogin(id);
+        clsLogin login = loginRepository.darLogin(id);
         if (login != null) {
-            model.addAttribute("login", login);
+            model.addAttribute("clsLogin", login);
             return "loginEditar";
         } else {
             return "redirect:/logins";
@@ -64,7 +59,7 @@ public class LoginController {
     }
 
     @PostMapping("/logins/{id}/edit/save")
-    public String loginEditarGuardar(@PathVariable("id") int numId, @ModelAttribute Login login) {
+    public String loginEditarGuardar(@PathVariable("id") int numId, @ModelAttribute clsLogin login) {
         loginRepository.updateLogin(login.getId(), login.getPassword());
         return "redirect:/logins";
     }
