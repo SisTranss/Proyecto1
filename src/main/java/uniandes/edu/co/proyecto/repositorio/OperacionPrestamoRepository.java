@@ -29,7 +29,7 @@ public interface OperacionPrestamoRepository extends JpaRepository<Operacion_cue
 
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO operaciones_prestamos (id, tipo_operacion, fecha_operacion, id_prestamo, monto_pago, punto_atencion) VALUES ( general_seq.nextval , :tipo_operacion, :fecha_operacion, :id_prestamo, :monto_pago, :num_doc_usuario, :punto_atencion)", nativeQuery = true)
+    @Query(value = "INSERT INTO operaciones_prestamos (id, tipo_operacion, fecha_operacion, id_prestamo, monto_pago, punto_atencion) VALUES ( general_seq.nextval , :tipo_operacion, :fecha_operacion, :id_prestamo, :monto_pago, :punto_atencion)", nativeQuery = true)
     void insertarOperacion_prestamo(@Param("tipo_operacion") String tipo_operacion, @Param("fecha_operacion") Date fecha_operacion, @Param("id_prestamo") Integer id_prestamo, @Param("monto_pago") Float monto_pago,
     @Param("punto_atencion") Integer punto_atencion);
 

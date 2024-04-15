@@ -37,15 +37,16 @@
                 <td th:text="${prestamo.valor_cuota}"></td>
                 <td th:text="${prestamo.darNumeroCliente()}"></td>
                 <td>
-                
-                <a th:href="@{prestamos/{id}/cerrar(id=${prestamo.id})}" 
-                    onclick="return confirm('¿Estás seguro de cerrar este prestamo?')">Cerrar préstamo</a>
-                    <br/>
                     <a th:href="@{prestamos/{id}/aprobar(id=${prestamo.id})}" 
                     onclick="return confirm('¿Estás seguro de aprobar este prestamo?')">Aprobar préstamo</a>
                     <br/>
                     <a th:href="@{prestamos/{id}/rechazar(id=${prestamo.id})}"
                     onclick="return confirm('¿Estás seguro de rechazar este prestamo?')">Rechazar préstamo</a>
+                    <br/>
+                    <a th:href="@{prestamos/{id}/cerrar(id=${prestamo.id})}" 
+                    onclick="return confirm('¿Estás seguro de cerrar este prestamo?')">Cerrar préstamo</a>
+                    <br/>
+                    <a th:href="@{'/prestamos/' + ${prestamo.id} + '/operacionPrestamo'}">Pagar cuota</a>
                 </td>
             </tr>
 
@@ -53,7 +54,6 @@
     </table>
     <div>
         <a th:href="@{prestamos/new}" class="btn btn-primary">Abrir préstamo</a>
-        <a th:href="@{prestamos/new}" class="btn btn-primary">Pagar cuota</a>
         
     </div>
   </div>

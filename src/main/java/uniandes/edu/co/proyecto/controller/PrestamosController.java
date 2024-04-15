@@ -53,6 +53,7 @@ public class PrestamosController {
     @GetMapping("/prestamos/{id}/rechazar")
     public String prestamoRechazarForm( @PathVariable("id") Integer id) {
         prestamoRepository.rechazarPrestamo(id);
+        prestamoRepository.eliminarPrestamo(id);
         return "redirect:/prestamos";
     }
 
