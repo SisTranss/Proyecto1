@@ -23,6 +23,8 @@ public class Login {
        this.password = password;
     }
 
+    public Login() {
+    }
 
     public int getId() {
         return id;
@@ -52,7 +54,5 @@ public class Login {
     public void setPassword(String password) {
         this.password = password;
     }
-    
-
     
 }

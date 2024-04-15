@@ -10,9 +10,13 @@
     <div th:fragment="usuarioForm(titulo)" class="container border border-2 w-25">
         <h1 class="text-center" th:text="${titulo}"></h1>
         <form>
-            <label class="col-form-label"> Numero identificacion </label>
-            <input class = "form-control" type ="number" id="num_id"
-            name = "num_id" required th:value="${usuario.num_id}"/>
+            <label class="col-form-label"> Login </label>
+            <input class = "form-control" type ="text" id="login"
+            name = "login.login" required th:value="${login.getlogin()}"/>
+
+            <label class="col-form-label"> Contraseña </label>
+            <input class = "form-control" type ="password" id="password"
+            name = "login.password" required th:value="${login.password}"/>
 
             <label class="col-form-label"> Nombre </label>
             <input class = "form-control" type ="text" id="nombre"
@@ -31,26 +35,39 @@
             name = "telefono" required th:value="${usuario.telefono}"/>
 
             <label class="col-form-label"> Tipo usuario </label>
-            <input class = "form-control" type ="number" id="tipousuario"
-            name = "tipoUsuario" required th:value="${usuario.tipoUsuario}"/>
+            <select class="form-control" id="tipo_Usuario" name="tipo_Usuario" required>
+                <option value="1" th:selected="${usuario.getTipoUsuario() == 1}">Empleado</option>
+                <option value="2" th:selected="${usuario.getTipoUsuario() == 2}">Cliente</option>
+                <option value="3" th:selected="${usuario.getTipoUsuario() == 3}">Ambos</option>
+            </select>
 
-            <label class="col-form-label"> Lugar </label>
-            <input class = "form-control" type ="number" id="lugar"
-            name = "lugar" required th:value="${usuario.lugar}"/>
+            <label class="col-form-label"> Codigo Postal </label>
+            <input class = "form-control" type ="number" id="codigoPostal"
+            name = "codigo_Postal" required th:value="${usuario.codigoPostal}"/>
 
-            <label class="col-form-label"> Login</label>
-            <input class = "form-control" type ="text" id="login"
-            name = "login" required th:value="${usuario.login}"/>
+            <label class="col-form-label"> Direccion </label>
+            <input class = "form-control" type ="text" id="direccion"
+            name = "direccion" required th:value="${usuario.direccion}"/>
 
+            <label class="col-form-label">Ciudad</label>
+            <input class = "form-control" type ="text" id="ciudad"
+            name = "ciudad" required th:value="${usuario.ciudad}"/>
 
-            <label class="col-form-label"> Palabra clave</label>
-            <input class = "form-control" type ="text" id="palabraClave"
-            name = "palabraClave" required th:value="${usuario.palabraClave}"/>
-            
+            <label class="col-form-label"> Departamento </label>
+            <input class = "form-control" type ="text" id="departamento"
+            name = "departamento" required th:value="${usuario.departamento}"/>
             
             <label class="col-form-label"> Tipo documento</label>
-            <input class = "form-control" type ="text" id="tipoDoc"
-            name = "tipoDoc" required th:value="${usuario.tipoDoc}"/>
+            <select class="form-control" id="tipo_Usuario" name="tipo_Usuario" required>
+                <option value="T.I" th:selected="${usuario.getTipoDoc() eq 'T.I'}">T.I</option>
+                <option value="C.C" th:selected="${usuario.getTipoDoc() eq 'C.C'}">C.C</option>
+                <option value="C.E" th:selected="${usuario.getTipoDoc() eq 'C.E'}">C.E</option>
+                <option value="Otro" th:selected="${usuario.getTipoDoc() eq 'Otro'}">Otro</option>
+            </select>
+
+            <label class="col-form-label"> Numero documento</label>
+            <input class = "form-control" type ="text" id="num_Doc"
+            name = "num_Doc" required th:value="${usuario.numDoc}"/>
 
             <br>
             <div class="text-center">
