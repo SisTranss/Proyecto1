@@ -39,7 +39,7 @@ public interface PrestamoRepository extends JpaRepository<Prestamo, Integer>{
 
     @Modifying
     @Transactional
-    @Query(value = "UPDATE prestamos SET estado = 'cerrado' WHERE id = :id AND monto = 0", nativeQuery = true)
+    @Query(value = "UPDATE prestamos SET estado = 'pagado' WHERE id = :id AND monto = 0", nativeQuery = true)
     void cerrarPrestamo(@Param("id") Integer id);
 
     @Modifying

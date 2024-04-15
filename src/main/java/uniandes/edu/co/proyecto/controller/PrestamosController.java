@@ -32,62 +32,28 @@ public class PrestamosController {
 
     @PostMapping("/prestamos/new/save")
     public String prestamoGuardar(@ModelAttribute Prestamo prestamo) {
-        prestamoRepository.insertarPrestamo(prestamo.getProposito(), prestamo.getEstado(), prestamo.getMonto(), prestamo.getTasa(),
+        prestamoRepository.insertarPrestamo(prestamo.getProposito(), "solicitado", prestamo.getMonto(), prestamo.getTasa(),
         prestamo.getCuotas(), prestamo.getDia_pago(), prestamo.getValor_cuota(), prestamo.getNum_doc_cliente().getNum_id());
         return "redirect:/prestamos";
     }
 
     @GetMapping("/prestamos/{id}/cerrar")
-    public String prestamoCerrarForm( @PathVariable("id") Integer id, Model model) {
-        Prestamo prestamo = prestamoRepository.darPrestamo(id);
-        if (prestamo != null) {
-            model.addAttribute("prestamo", prestamo);
-            return "prestamoCerrar";
-        } else {
-            return "redirect:/prestamos";
-        }
-    }
-
-    @PostMapping("/prestamos/{id}/cerrar/save")
-    public String prestamoCerrarGuardar(@PathVariable("id") Integer id, @ModelAttribute Prestamo prestamo) {
-        prestamoRepository.cerrarPrestamo(id);
-        return "redirect:/prestamos";
+    public String prestamoCerrarForm( @PathVariable("id") Integer id) {
+    prestamoRepository.cerrarPrestamo(id);
+    return "redirect:/prestamos";
     }
 
     @GetMapping("/prestamos/{id}/aprobar")
-    public String prestamoAprobarForm( @PathVariable("id") Integer id, Model model) {
-        Prestamo prestamo = prestamoRepository.darPrestamo(id);
-        if (prestamo != null) {
-            model.addAttribute("prestamo", prestamo);
-            return "prestamoApribar";
-        } else {
-            return "redirect:/prestamos";
-        }
-    }
-
-    @PostMapping("/prestamos/{id}/aprobar/save")
-    public String prestamoAprobarGuardar(@PathVariable("id") Integer id, @ModelAttribute Prestamo prestamo) {
+    public String prestamoAprobarForm( @PathVariable("id") Integer id) {
         prestamoRepository.aprobarPrestamo(id);
         return "redirect:/prestamos";
+        
     }
 
     @GetMapping("/prestamos/{id}/rechazar")
-    public String prestamoRechazarForm( @PathVariable("id") Integer id, Model model) {
-        Prestamo prestamo = prestamoRepository.darPrestamo(id);
-        if (prestamo != null) {
-            model.addAttribute("prestamo", prestamo);
-            return "prestamoCerrar";
-        } else {
-            return "redirect:/prestamos";
-        }
-    }
-
-    @PostMapping("/prestamos/{id}/rechazar/save")
-    public String prestamoRechazarGuardar(@PathVariable("id") Integer id, @ModelAttribute Prestamo prestamo) {
+    public String prestamoRechazarForm( @PathVariable("id") Integer id) {
         prestamoRepository.rechazarPrestamo(id);
-        prestamoRepository.eliminarPrestamo(id);
         return "redirect:/prestamos";
     }
-
 
 }

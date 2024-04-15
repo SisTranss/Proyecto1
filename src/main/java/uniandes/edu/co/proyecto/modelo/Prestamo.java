@@ -124,6 +124,9 @@ public class Prestamo {
         this.num_doc_cliente = num_doc_cliente;
     }
 
-    
+    public int darNumeroCliente(){
+        return this.getNum_doc_cliente().getNum_id();
+    }
+
     
 }
