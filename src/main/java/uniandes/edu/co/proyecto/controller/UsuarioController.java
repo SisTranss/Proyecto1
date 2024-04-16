@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import uniandes.edu.co.proyecto.modelo.Usuario;
+import uniandes.edu.co.proyecto.repositorio.ClienteRepository;
+import uniandes.edu.co.proyecto.repositorio.EmpleadoRepository;
+import uniandes.edu.co.proyecto.repositorio.LoginRepository;
 import uniandes.edu.co.proyecto.repositorio.UsuarioRepository;
 
 @Controller
@@ -17,6 +20,15 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private LoginRepository loginRepository;
+
+    @Autowired 
+    private ClienteRepository clienteRepository;
+
+    @Autowired
+    private EmpleadoRepository empleadoRepository;
 
     @GetMapping("/usuarios")
     public String usuarios(Model model){
@@ -31,9 +43,36 @@ public class UsuarioController {
     }
 
     @PostMapping("/usuarios/new/save")
-    public String usuarioGuardar(@ModelAttribute Usuario usuario, @RequestParam("id") int id) {
-        usuarioRepository.insertarUsuario(id,usuario.getNombre(), usuario.getEmail(),usuario.getNacionalidad(), usuario.getTelefono(), usuario.getTipoUsuario(),
-        usuario.getTipoDoc(), usuario.getNumDoc(), usuario.getCodigoPostal(), usuario.getDireccion(), usuario.getCiudad(), usuario.getDepartamento());
+    public String usuarioGuardar(
+    @RequestParam String login,
+    @RequestParam String password,
+    @RequestParam String nombre,
+    @RequestParam String email,
+    @RequestParam String nacionalidad,
+    @RequestParam String telefono,
+    @RequestParam int tipo_Usuario,
+    @RequestParam int tipo_Empleado,
+    @RequestParam int tipo_Cliente,
+    @RequestParam String tipo_Doc,
+    @RequestParam String num_Doc,
+    @RequestParam int codigo_Postal,
+    @RequestParam String direccion,
+    @RequestParam String ciudad,
+    @RequestParam String departamento) {
+        
+        loginRepository.insertarLogin(login, password);
+        int id = loginRepository.buscarLogin(login, password);
+
+        usuarioRepository.insertarUsuario(id, nombre, email, nacionalidad, telefono, tipo_Usuario, tipo_Doc, num_Doc, codigo_Postal, direccion, ciudad, departamento);
+
+        if (tipo_Usuario == 1 ){
+            empleadoRepository.insertarEmpleado(id, tipo_Empleado);
+        } else if (tipo_Usuario == 2) {
+            clienteRepository.insertarCliente(id, tipo_Cliente);
+        } else {
+            clienteRepository.insertarCliente(id, tipo_Cliente);
+            empleadoRepository.insertarEmpleado(id, tipo_Empleado);
+        }
         return "redirect:/usuarios";
     }
 

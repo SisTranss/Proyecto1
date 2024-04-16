@@ -42,8 +42,10 @@ public class LoginController {
     }
 
     @PostMapping("/logins/new/save")
-    public String loginGuardar(@ModelAttribute clsLogin login, RedirectAttributes redirectAttributes) {
-        loginRepository.insertarLogin(login.getLogin(),login.getPassword());
+    public String loginGuardar(@RequestParam String login, @RequestParam String password, RedirectAttributes redirectAttributes) {
+        loginRepository.insertarLogin(login,password);
+        int id = loginRepository.buscarLogin(login, password);
+        redirectAttributes.addAttribute("id", id);
         return "usuarioNuevo";
     }
 
