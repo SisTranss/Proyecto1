@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Fragmento</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
+</head>
+
+<body>
+
+    <br>
+    <div th:fragment="prestamoForm(titulo)" class="container border border-2 w-25">
+        <h1 class="text-center" th:text="${titulo}"></h1>
+    
+        <form th:action="@{/prestamos/new/save}" method="post">
+
+            <label class="col-form-label" for="proposito">Propósito:</label>
+            <select class="form-control" id="proposito" name="proposito" required>
+                <option value="vivienda" th:selected="${prestamo.proposito eq 'vivienda'}">Vivienda</option>
+                <option value="estudio" th:selected="${prestamo.proposito eq 'estudio'}">Estudio</option>
+                <option value="automovil" th:selected="${prestamo.proposito eq 'automovil'}">Automóvil</option>
+                <option value="libre inversion" th:selected="${prestamo.proposito eq 'libre inversion'}">Libre Inversión</option>
+            </select>
+
+            <label class="col-form-label" for="monto">Monto:</label>
+            <input class="form-control" type="number" id="monto" name="monto" required th:value="${prestamo.monto}" />
+
+            <label class="col-form-label" for="tasa">Tasa:</label>
+            <input class="form-control" type="number" id="tasa" name="tasa" required th:value="${prestamo.tasa}" />
+
+            <label class="col-form-label" for="cuotas">Cuotas:</label>
+            <input class="form-control" type="number" id="cuotas" name="cuotas" required th:value="${prestamo.cuotas}" />
+
+            <label class="col-form-label" for="dia_pago">Día de Pago:</label>
+            <input class="form-control" type="number" id="dia_pago" name="dia_pago" required th:value="${prestamo.dia_pago}" />
+
+            <label class="col-form-label" for="valor_cuota">Valor Cuota:</label>
+            <input class="form-control" type="number" id="valor_cuota" name="valor_cuota" required th:value="${prestamo.valor_cuota}" />
+
+            <label class="col-form-label" for="num_doc_cliente">ID Cliente:</label>
+            <input class="form-control" type="number" id="num_doc_cliente" name="num_doc_cliente" required th:value="${prestamo.num_doc_cliente}" /><br>
+
+            <div class="text-center">
+                <input type="submit" value="Guardar" class="btn btn-primary">
+                <a th:href="@{/prestamos}" class="btn btn-primary">Cancelar</a>
+            </div>
+        </form>
+
+    </div>
+
+</body>
+
+</html>
