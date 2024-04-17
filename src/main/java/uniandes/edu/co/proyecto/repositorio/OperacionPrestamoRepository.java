@@ -9,12 +9,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import uniandes.edu.co.proyecto.modelo.OperacionPrestamo;
-import uniandes.edu.co.proyecto.modelo.Operacion_cuenta;
 
 import java.sql.Date;
 
 
-public interface OperacionPrestamoRepository extends JpaRepository<Operacion_cuenta, Integer>{
+public interface OperacionPrestamoRepository extends JpaRepository<OperacionPrestamo, Integer>{
 
     @Query(value = "SELECT * FROM operaciones_prestamos", nativeQuery = true)
     Collection<OperacionPrestamo> darOperaciones();
