@@ -25,7 +25,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, clsLogin>{
     @Query(value = "INSERT INTO usuarios (id, nombre, email, nacionalidad, tipo_Usuario, tipo_Doc, num_Doc, codigo_Postal, direccion, ciudad, departamento,telefono) VALUES (:id, :nombre, :email, :nacionalidad, :tipo_Usuario, :tipo_Doc, :num_Doc, :codigo_Postal, :direccion, :ciudad, :departamento,:telefono)", nativeQuery = true)
     void insertarUsuario(@Param("id") int id,@Param("nombre") String nombre,@Param("email") String email, @Param("nacionalidad") String nacionalidad,
                         @Param("telefono") String telefono,@Param("tipo_Usuario") int tipo_Usuario, @Param("tipo_Doc")String tipo_Doc,
-                        @Param("num_Doc")String num_Doc, @Param("codigo_Postal")int codigo_Postal, @Param("direccion")String direccion, @Param("ciudad")String ciudad,
+                        @Param("num_Doc")String num_Doc, @Param("codigo_Postal")Integer codigo_Postal, @Param("direccion")String direccion, @Param("ciudad")String ciudad,
                         @Param("departamento")String departamento);
 
     @Modifying
@@ -40,5 +40,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, clsLogin>{
     @Transactional
     @Query(value =  "DELETE FROM usuarios WHERE id = :id", nativeQuery = true)
     void eliminarUsuario(@Param("id") int id);
+
+    @Query(value = "SELECT tipo_usuario FROM usuarios WHERE id = :id",nativeQuery = true)
+    Integer darTipoEmpleadoPorUsuario(@Param("id") int id);
     
 }
