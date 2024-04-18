@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>General Home</title>
+    <!-- Incluir Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4 text-center">Bienvenido Gerente Oficina</h1>
+        <div class="text-center">
+            <h1>Ingresar ID de la Oficina</h1>
+
+            <form action="#" th:action="@{/cuentas/oficina}" method="get">
+                <div class="form-group">
+                    <label for="idOficina">ID de la Oficina:</label>
+                    <input type="text" class="form-control" id="idOficina" name="id_oficina" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Ver cuentas por oficina</button>
+            </form>
+            <a th:href="@{/prestamos}" class="btn btn-primary m-2">Gestionar Prestamos</a>
+            <a th:href="@{/}" class="btn btn-primary m-2">Volver Atrás</a>
+        </div>  
+    </div>
+
+    <!-- Incluir Bootstrap JS y Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

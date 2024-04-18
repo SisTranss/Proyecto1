@@ -20,7 +20,7 @@ public interface EmpleadoRepository extends JpaRepository<Empleado, Integer>{
 
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO empleados (num_id, cargo) VALUES (general_seq.nextval, (:num_id, :cargo)", nativeQuery = true)
+    @Query(value = "INSERT INTO empleados (num_id, cargo) VALUES (:num_id, :cargo)", nativeQuery = true)
     void insertarEmpleado(@Param("num_id") int num_id,@Param("cargo") int cargo);
 
     @Modifying
@@ -32,5 +32,8 @@ public interface EmpleadoRepository extends JpaRepository<Empleado, Integer>{
     @Transactional
     @Query(value =  "DELETE FROM empleados WHERE num_id = :num_id", nativeQuery = true)
     void eliminarEmpleado(@Param("num_id") int num_id);
+
+    @Query(value = "SELECT cargo FROM empleados WHERE num_id = :num_id",nativeQuery = true)
+    Integer darCargoPorEmpleado(@Param("num_id") int num_id);
 
 }

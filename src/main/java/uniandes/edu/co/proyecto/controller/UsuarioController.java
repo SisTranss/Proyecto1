@@ -63,6 +63,8 @@ public class UsuarioController {
         loginRepository.insertarLogin(login, password);
         int id = loginRepository.buscarLogin(login, password);
 
+        System.out.println(codigo_Postal);
+
         usuarioRepository.insertarUsuario(id, nombre, email, nacionalidad, telefono, tipo_Usuario, tipo_Doc, num_Doc, codigo_Postal, direccion, ciudad, departamento);
 
         if (tipo_Usuario == 1 ){

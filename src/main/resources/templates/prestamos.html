@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puntos de atencion</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+</head>
+<body>
+  <div>
+    <h1>Prestamos</h1>
+    <table class = "table table-hover table bordered">
+        <thead class = "thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>proposito</th>
+                <th>estado</th>
+                <th>monto</th>
+                <th>tasa</th>
+                <th>cuotas</th>
+                <th>dia de pago</th>
+                <th>valor cuota</th>
+                <th>ID del cliente</th>
+                <th>Acciones</th>
+            </tr>
+
+        </thead>
+        <th:block th:each = "prestamo:${prestamos}" >
+            <tr>
+                <td th:text="${prestamo.id}"></td>
+                <td th:text="${prestamo.proposito}"></td>
+                <td th:text="${prestamo.estado}"></td>
+                <td th:text="${prestamo.monto}"></td>
+                <td th:text="${prestamo.tasa}"></td>
+                <td th:text="${prestamo.cuotas}"></td>
+                <td th:text="${prestamo.dia_pago}"></td>
+                <td th:text="${prestamo.valor_cuota}"></td>
+                <td th:text="${prestamo.darNumeroCliente()}"></td>
+                <td>
+                    <a th:href="@{prestamos/{id}/aprobar(id=${prestamo.id})}" 
+                    onclick="return confirm('¿Estás seguro de aprobar este prestamo?')">Aprobar préstamo</a>
+                    <br/>
+                    <a th:href="@{prestamos/{id}/rechazar(id=${prestamo.id})}"
+                    onclick="return confirm('¿Estás seguro de rechazar este prestamo?')">Rechazar préstamo</a>
+                    <br/>
+                    <a th:href="@{prestamos/{id}/cerrar(id=${prestamo.id})}" 
+                    onclick="return confirm('¿Estás seguro de cerrar este prestamo?')">Cerrar préstamo</a>
+                    <br/>
+                    <a th:href="@{'/prestamos/' + ${prestamo.id} + '/operacionPrestamo'}">Pagar cuota</a>
+                </td>
+            </tr>
+
+        </th:block>
+    </table>
+    <div>
+        <a th:href="@{prestamos/new}" class="btn btn-primary">Abrir préstamo</a>
+        <a th:href="@{/}" class="btn btn-primary">Volver atrás</a>
+        
+    </div>
+  </div>
+
+</body>
+</html>
