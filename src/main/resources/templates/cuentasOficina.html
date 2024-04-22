@@ -79,16 +79,13 @@
                     <td th:text="${cuenta.getNum_doc_cliente().getNum_id()}"></td>
                     <td th:text="${cuenta.id_oficina.getId()}"></td>
                     <td>
-                        <form action="#" th:action="@{/cuentas/cambiar-estado/save}" method="post">
-                            <input type="hidden" name="cuentaID" th:value="${cuenta.id}">
-                            <input type="hidden" name="nuevoEstado" value="cerrada">
-                            <button type="submit" class="btn btn-primary">Cerrar cuenta</button>
-                        </form>
 
-                        <form action="#" th:action="@{/cuentas/cambiar-estado/save}" method="post">
-                            <input type="hidden" name="nuevoEstado" value="desactivada">
-                            <button type="submit" class="btn btn-primary">Desactivar cuenta</button>
-                        </form>
+                        <a th:href="@{/cuentas/{id}/cambiar-estado/save(cuentaID=${cuenta.id}, nuevoEstado='cerrada', id_oficina=${cuenta.id_oficina.getId()})}" 
+                        onclick="return confirm('¿Estás seguro de cerrar esta cuenta?')">Cerrar cuenta</a>
+
+                        <a th:href="@{/cuentas/{id}/cambiar-estado/save(cuentaID=${cuenta.id}, nuevoEstado='desactivada', id_oficina=${cuenta.id_oficina.getId()})}" 
+                        onclick="return confirm('¿Estás seguro de desactivar esta cuenta?')">Desactivar cuenta</a>
+
                     </td>
                 </tr>
             </th:block>

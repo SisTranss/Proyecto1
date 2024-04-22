@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import uniandes.edu.co.proyecto.repositorio.CuentaRepository;
+import uniandes.edu.co.proyecto.repositorio.UsuarioRepository;
 import uniandes.edu.co.proyecto.modelo.Cuenta;
 
 import org.springframework.ui.Model;
@@ -21,6 +22,9 @@ public class CuentasController {
 
     @Autowired
     private CuentaRepository cuentaRepository;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     @GetMapping("/cuentas")
     public String cuentas(Model model, String tipo, Integer max_saldo, Integer min_saldo, Date ultima_transaccion) {
@@ -48,7 +52,7 @@ public class CuentasController {
 
     @GetMapping("/cuentas/oficina")
     public String oficinaCuentas(@RequestParam("id_oficina") int id_oficina, Model model, String tipo, Integer max_saldo, Integer min_saldo, Date ultima_transaccion) {
-
+        System.out.println(id_oficina);
         if((tipo ==null || tipo.equals("")) && max_saldo==null && min_saldo==null && (ultima_transaccion == null || ultima_transaccion.equals("")) )
         {
             model.addAttribute("cuentas", cuentaRepository.darCuentasPorIDoficina(id_oficina));
@@ -98,17 +102,20 @@ public class CuentasController {
     public String cuentaGuardar(@ModelAttribute Cuenta cuenta) {
     Date hoy = new Date(2024/4/3);
 
+        Integer num_id = usuarioRepository.darIdUsuario(cuenta.getNum_doc_cliente().getNum_id());
+
         cuentaRepository.insertarCuenta(cuenta.getTipo(), cuenta.getEstado(), cuenta.getSaldo(),
-                hoy, cuenta.getNum_doc_cliente().getNum_id(),
+                hoy, num_id,
                 cuenta.getId_oficina().getId());
                 
-        return "redirect:/cuentas/oficina";
+        return "redirect:/cuentas/oficina?id_oficina=" + cuenta.getId_oficina().getId();
     }
 
-    @PostMapping("/cuentas/cambiar-estado/save")
-    public String actualizarCuentaGuardar(@RequestParam("nuevoEstado") String nuevoEstado, @RequestParam("cuentaID") Integer cuentaID) {
+    @GetMapping("/cuentas/{id}/cambiar-estado/save")
+    public String actualizarCuentaGuardar(@RequestParam("nuevoEstado") String nuevoEstado, @RequestParam("cuentaID") Integer cuentaID, @RequestParam("id_oficina") Integer id_oficina) {
         cuentaRepository.actualizarEstadoCuenta(cuentaID, nuevoEstado);
-        return "redirect:/oficina/cuentas";
+        return "redirect:/cuentas/oficina?id_oficina=" + id_oficina;
     }
+
 
 }
