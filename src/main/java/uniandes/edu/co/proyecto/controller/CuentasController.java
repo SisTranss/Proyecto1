@@ -67,7 +67,13 @@ public class CuentasController {
     }
 
     @GetMapping("/cuentas/cliente")
-    public String clienteCuentas(@RequestParam("num_doc_cliente") Integer num_doc_cliente, Model model, String tipo, Integer max_saldo, Integer min_saldo, Date ultima_transaccion) {
+    public String clienteCuentas(@RequestParam("num_doc_cliente") Integer num_doc_cliente,
+     Model model, 
+     String tipo, 
+     Integer max_saldo, 
+     Integer min_saldo, 
+     Date ultima_transaccion) {
+        System.out.println(num_doc_cliente);
         if((tipo ==null || tipo.equals("")) && max_saldo==null && min_saldo==null && (ultima_transaccion == null || ultima_transaccion.equals("")) )
         {
             model.addAttribute("cuentas", cuentaRepository.darCuentasPorCliente2(num_doc_cliente));
