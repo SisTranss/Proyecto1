@@ -40,12 +40,16 @@ public class OperacionCuentasController {
     @Transactional
     public String retirarDinero(@ModelAttribute OperacionCuenta operacion_cuenta, Model model) {
         try {
-            operacionCuentaRepository.insertarOperacion_cuenta(operacion_cuenta.getTipo_operacion(), operacion_cuenta.getFecha_operacion(), operacion_cuenta.getId_cuenta().getId(),
-            operacion_cuenta.getMonto_pago(), operacion_cuenta.getPunto_atencion().getId());
-
-            cuentaRepository.actualizarSaldoRetiro(operacion_cuenta.getId_cuenta().getId(), operacion_cuenta.getMonto_pago());
-
-            return "redirect:/cuentas";
+            int rowsAffectedRetirar = cuentaRepository.actualizarSaldoRetiro(operacion_cuenta.getId_cuenta().getId(), operacion_cuenta.getMonto_pago());
+            if (rowsAffectedRetirar > 0){
+                operacionCuentaRepository.insertarOperacion_cuenta(operacion_cuenta.getTipo_operacion(), operacion_cuenta.getFecha_operacion(), operacion_cuenta.getId_cuenta().getId(),
+                operacion_cuenta.getMonto_pago(), operacion_cuenta.getPunto_atencion().getId());
+                return "redirect:/cuentas";
+            }
+            else {
+                throw new RuntimeException("Error al hacer el retiro: No se pudieron completar las actualizaciones de saldo");
+            }
+            
         } catch (Exception e) {
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             model.addAttribute("errorMessage", "Error al retirar dinero: " + e.getMessage());
@@ -58,12 +62,15 @@ public class OperacionCuentasController {
     @Transactional
     public String consignarDinero(@ModelAttribute OperacionCuenta operacion_cuenta, Model model) {
         try {
-            operacionCuentaRepository.insertarOperacion_cuenta(operacion_cuenta.getTipo_operacion(), operacion_cuenta.getFecha_operacion(), operacion_cuenta.getId_cuenta().getId(),
-            operacion_cuenta.getMonto_pago(), operacion_cuenta.getPunto_atencion().getId());
+            int rowsAffectedConsignar = cuentaRepository.actualizarSaldoConsignar(operacion_cuenta.getId_cuenta().getId(), operacion_cuenta.getMonto_pago());
+            if (rowsAffectedConsignar > 0){
+                operacionCuentaRepository.insertarOperacion_cuenta(operacion_cuenta.getTipo_operacion(), operacion_cuenta.getFecha_operacion(), operacion_cuenta.getId_cuenta().getId(),
+                operacion_cuenta.getMonto_pago(), operacion_cuenta.getPunto_atencion().getId());
+                return "redirect:/cuentas";
+            }else {
+                throw new RuntimeException("Error al hacer la consignacion: No se pudieron completar las actualizaciones de saldo");
+            }
 
-            cuentaRepository.actualizarSaldoConsignar(operacion_cuenta.getId_cuenta().getId(), operacion_cuenta.getMonto_pago());
-            
-            return "redirect:/cuentas";
         } catch (Exception e) {
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             model.addAttribute("errorMessage", "Error al retirar dinero: " + e.getMessage());
