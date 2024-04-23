@@ -76,14 +76,14 @@ public interface CuentaRepository extends JpaRepository<Cuenta, Integer> {
     void actualizarEstadoCuenta(@Param("id") Integer id, @Param("estado") String estado);
 
     @Modifying
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Query(value = "UPDATE cuentas SET saldo = saldo - :monto_pago WHERE id = :id AND saldo >= :monto_pago AND estado NOT IN ('cerrada', 'desactivada')" , nativeQuery = true)
-    void actualizarSaldoRetiro(@Param("id") Integer id, @Param("monto_pago") Float monto_pago);
+    Integer actualizarSaldoRetiro(@Param("id") Integer id, @Param("monto_pago") Float monto_pago);
 
     @Modifying
     @Transactional
     @Query(value = "UPDATE cuentas SET saldo = saldo + :monto_pago WHERE id = :id", nativeQuery = true)
-    void actualizarSaldoConsignar(@Param("id") Integer id, @Param("monto_pago") Float monto_pago);
+    Integer actualizarSaldoConsignar(@Param("id") Integer id, @Param("monto_pago") Float monto_pago);
 
 
 }

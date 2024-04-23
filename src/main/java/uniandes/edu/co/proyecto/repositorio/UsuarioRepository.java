@@ -20,6 +20,9 @@ public interface UsuarioRepository extends JpaRepository<Usuario, clsLogin>{
     @Query(value = "SELECT * FROM usuarios WHERE id = :id",nativeQuery = true)
     Usuario darUsuario(@Param("id") int id);
 
+    @Query(value = "SELECT id FROM usuarios WHERE num_doc = :num_doc",nativeQuery = true)
+    Integer darIdUsuario(@Param("num_doc") int num_doc);
+
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO usuarios (id, nombre, email, nacionalidad, tipo_Usuario, tipo_Doc, num_Doc, codigo_Postal, direccion, ciudad, departamento,telefono) VALUES (:id, :nombre, :email, :nacionalidad, :tipo_Usuario, :tipo_Doc, :num_Doc, :codigo_Postal, :direccion, :ciudad, :departamento,:telefono)", nativeQuery = true)

@@ -7,12 +7,10 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
 </head>
 <body>
-    <div th:fragment="operacionCuentaForm(titulo)" class="container border border-2 w-25">
+    <div th:fragment="operacionCuentaForm(titulo, tipo)" class="container border border-2 w-25">
         <h1 class="text-center" th:text="${titulo}"></h1>
         <form>
-            <label class="col-form-label"> Tipo operacion </label>
-            <input class = "form-control" type ="text" id="tipo_operacion"
-            name = "tipo_operacion" required th:value="${operacionCuenta.tipo_operacion}"/>
+            <input type="hidden" id="tipo_operacion" name="tipo_operacion" th:value='${tipo}'/>
 
 
             <label class="col-form-label"> Fecha operacion </label>
