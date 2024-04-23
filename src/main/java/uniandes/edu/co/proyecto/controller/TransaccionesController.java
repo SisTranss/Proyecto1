@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import uniandes.edu.co.proyecto.modelo.Transaccion;
 import uniandes.edu.co.proyecto.repositorio.CuentaRepository;
 import uniandes.edu.co.proyecto.repositorio.TransaccionRepository;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 
 
@@ -30,12 +32,26 @@ public class TransaccionesController {
     }
 
     @PostMapping("/transacciones/new/save")
-    public String transaccionGuardar(@ModelAttribute Transaccion transaccion) {
-        transaccionRepository.insertarTransaccion(transaccion.getFecha_operacion(), transaccion.getMonto_pago(), transaccion.getCuenta_origen().getId(), 
-        transaccion.getCuenta_destino().getId(), transaccion.getPunto_atencion().getId());
-        cuentaRepository.actualizarSaldoConsignar(transaccion.getCuenta_destino().getId(), transaccion.getMonto_pago());
-        cuentaRepository.actualizarSaldoRetiro(transaccion.getCuenta_origen().getId(), transaccion.getMonto_pago());
-        return "redirect:/cuentas";
+    @Transactional
+    public String transaccionGuardar(@ModelAttribute Transaccion transaccion, Model model) {
+        try {
+            int rowsAffectedConsignar = cuentaRepository.actualizarSaldoConsignar(transaccion.getCuenta_destino().getId(), transaccion.getMonto_pago());
+            int rowsAffectedRetirar = cuentaRepository.actualizarSaldoRetiro(transaccion.getCuenta_origen().getId(), transaccion.getMonto_pago());
+            if (rowsAffectedConsignar > 0 && rowsAffectedRetirar > 0) {
+                transaccionRepository.insertarTransaccion(transaccion.getFecha_operacion(), transaccion.getMonto_pago(), transaccion.getCuenta_origen().getId(), 
+                transaccion.getCuenta_destino().getId(), transaccion.getPunto_atencion().getId());
+                return "redirect:/cuentas";
+            } else {
+                throw new RuntimeException("Error al hacer la transaccion: No se pudieron completar las actualizaciones de saldo");
+            }
+            
+
+        } catch (Exception e) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            model.addAttribute("errorMessage",  e.getMessage());
+            System.out.println(e.getMessage());
+            return "error";
+        }
     }
 }
 

@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import uniandes.edu.co.proyecto.modelo.OperacionCuenta;
 import uniandes.edu.co.proyecto.repositorio.CuentaRepository;
 import uniandes.edu.co.proyecto.repositorio.OperacionCuentaRepository;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
+
 
 @Controller
 public class OperacionCuentasController {
@@ -19,23 +22,62 @@ public class OperacionCuentasController {
     private CuentaRepository cuentaRepository;
 
     
-    @GetMapping("/operaciones-cuentas/new")
-    public String operacion_cuentaForm(Model model) {
+    @GetMapping("/consignar/new")
+    public String consignarForm(Model model) {
         model.addAttribute("operacionCuenta", new OperacionCuenta());
-        return "operacionCuentaNueva";
+        return "operacionConsignarNueva";
     }
 
-    @PostMapping("/operaciones-cuentas/new/save")
-    public String operacion_cuentaGuardar(@ModelAttribute OperacionCuenta operacion_cuenta) {
-        operacionCuentaRepository.insertarOperacion_cuenta(operacion_cuenta.getTipo_operacion(), operacion_cuenta.getFecha_operacion(), operacion_cuenta.getId_cuenta().getId(),
-        operacion_cuenta.getMonto_pago(), operacion_cuenta.getPunto_atencion().getId());
-        if(operacion_cuenta.getTipo_operacion().equals("consignar")){
-            cuentaRepository.actualizarSaldoConsignar(operacion_cuenta.getId_cuenta().getId(), operacion_cuenta.getMonto_pago());
-        }else{
-            cuentaRepository.actualizarSaldoRetiro(operacion_cuenta.getId_cuenta().getId(), operacion_cuenta.getMonto_pago());
+    @GetMapping("/retirar/new")
+    public String retirarForm(Model model) {
+        model.addAttribute("operacionCuenta", new OperacionCuenta());
+        return "operacionRetirarNueva";
+    }
+    
+
+
+    @PostMapping("/retirar/new/save")
+    @Transactional
+    public String retirarDinero(@ModelAttribute OperacionCuenta operacion_cuenta, Model model) {
+        try {
+            int rowsAffectedRetirar = cuentaRepository.actualizarSaldoRetiro(operacion_cuenta.getId_cuenta().getId(), operacion_cuenta.getMonto_pago());
+            if (rowsAffectedRetirar > 0){
+                operacionCuentaRepository.insertarOperacion_cuenta(operacion_cuenta.getTipo_operacion(), operacion_cuenta.getFecha_operacion(), operacion_cuenta.getId_cuenta().getId(),
+                operacion_cuenta.getMonto_pago(), operacion_cuenta.getPunto_atencion().getId());
+                return "redirect:/cuentas";
+            }
+            else {
+                throw new RuntimeException("Error al hacer el retiro: No se pudieron completar las actualizaciones de saldo");
+            }
+            
+        } catch (Exception e) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            model.addAttribute("errorMessage", "Error al retirar dinero: " + e.getMessage());
+            System.out.println(e.getMessage());
+            return "redirect:/error";
         }
-
-        return "redirect:/cuentas";
     }
+    
+    @PostMapping("/consignar/new/save")
+    @Transactional
+    public String consignarDinero(@ModelAttribute OperacionCuenta operacion_cuenta, Model model) {
+        try {
+            int rowsAffectedConsignar = cuentaRepository.actualizarSaldoConsignar(operacion_cuenta.getId_cuenta().getId(), operacion_cuenta.getMonto_pago());
+            if (rowsAffectedConsignar > 0){
+                operacionCuentaRepository.insertarOperacion_cuenta(operacion_cuenta.getTipo_operacion(), operacion_cuenta.getFecha_operacion(), operacion_cuenta.getId_cuenta().getId(),
+                operacion_cuenta.getMonto_pago(), operacion_cuenta.getPunto_atencion().getId());
+                return "redirect:/cuentas";
+            }else {
+                throw new RuntimeException("Error al hacer la consignacion: No se pudieron completar las actualizaciones de saldo");
+            }
+
+        } catch (Exception e) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            model.addAttribute("errorMessage", "Error al retirar dinero: " + e.getMessage());
+            System.out.println(e.getMessage());
+            return "redirect:/error";
+        }
+    }
+       
 
 }
