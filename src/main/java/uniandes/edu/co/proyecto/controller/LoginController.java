@@ -54,12 +54,16 @@ public class LoginController {
         } else if(tipo_usuario == 3) {
             usuario = "cliente empleado";
         }
-
+        model.addAttribute("usuarioId",id);
         if (usuario.equals("gerente general")) {
             return "gerenteGeneralHome";
         } else if(usuario.equals("gerente oficina")){
             return "gerenteOficinaHome";
-        } else {
+        } else if (usuario.equals("cliente")){
+            return "clienteHome";
+        } else if (usuario.equals("cliente empleado")){
+            return "clienteEmpleadoHome";}
+        else {
             return "redirect:/";
         }   
 
