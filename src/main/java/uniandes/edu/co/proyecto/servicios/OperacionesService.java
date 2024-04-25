@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import uniandes.edu.co.proyecto.modelo.OperacionCuenta;
 import uniandes.edu.co.proyecto.repositorio.OperacionCuentaRepository;
-import uniandes.edu.co.proyecto.repositorio.TransaccionRepository;
 
 @Service
 public class OperacionesService {

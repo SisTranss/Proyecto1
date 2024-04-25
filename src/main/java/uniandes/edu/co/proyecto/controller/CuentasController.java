@@ -6,18 +6,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import uniandes.edu.co.proyecto.repositorio.CuentaRepository;
+import uniandes.edu.co.proyecto.servicios.OperacionesService;
 import uniandes.edu.co.proyecto.modelo.Cuenta;
 
 import org.springframework.ui.Model;
 
 @Controller
 public class CuentasController {
+
+    @Autowired
+    private OperacionesService operacionesServicio;
 
     @Autowired
     private CuentaRepository cuentaRepository;
@@ -117,6 +120,32 @@ public class CuentasController {
     public String actualizarCuentaGuardar(@RequestParam("nuevoEstado") String nuevoEstado, @RequestParam("cuentaID") Integer cuentaID) {
         cuentaRepository.actualizarEstadoCuenta(cuentaID, nuevoEstado);
         return "redirect:/oficina/cuentas";
+    }
+
+    @GetMapping("/consultarOperacionesCuentaSinFantasma")
+    public String consultarOperacionesSinFantasma(int id_cuenta, RedirectAttributes redirectAttributes) {
+        try {
+            // Indicar el ID de la cuenta a consultar.
+            operacionesServicio.darOperacionesCuentaSerializable(id_cuenta);
+        } catch (Exception e) {
+            System.err.println("Error durante la consulta de bares: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", "No se pudo consultar las operaciones de la cuenta correctamente.");
+            return "/";
+        }
+        return "/";
+    }
+
+    @GetMapping("/consultarOperacionesCuentaFantasma")
+    public String consultarOperacionesCuentaFantasma(int id_cuenta, RedirectAttributes redirectAttributes) {
+        try {
+            // Indicar el ID de la cuenta a consultar.
+            operacionesServicio.darOperacionesCuentaSerializable(id_cuenta);
+        } catch (Exception e) {
+            System.err.println("Error durante la consulta de bares: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", "No se pudo consultar las operaciones de la cuenta correctamente.");
+            return "/";
+        }
+        return "/";
     }
 
 }

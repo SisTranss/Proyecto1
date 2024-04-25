@@ -7,7 +7,6 @@
 <body>
     <div class="container">
         <h1 class="my-4 text-center">Bienvenido Cliente</h1>
-        <p>ID del Usuario: <span th:text="${usuarioId}"></span></p>
         <div class="text-center">
             <a th:href="@{/cuentas/cliente(num_doc_cliente=${usuarioId})}" class="btn btn-primary m-2">Consultar cuentas</a>
             <a th:href="@{/}" class="btn btn-primary m-2">Volver Atrás</a>
