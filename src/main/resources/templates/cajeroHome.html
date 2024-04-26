@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cajero Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4 text-center">Bienvenido Cajero</h1>
+        <p>ID del Usuario: <span th:text="${usuarioId}"></span></p>
+        <div class="text-center">
+            <a th:href="@{/prestamosCajero}" class="btn btn-primary m-2">Gestionar prestamos</a>
+            <a th:href="@{/}" class="btn btn-primary m-2">Volver Atrás</a>
+        </div>  
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

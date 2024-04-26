@@ -61,7 +61,11 @@ public class LoginController {
             return "gerenteOficinaHome";
         } else if (usuario.equals("cliente")){
             return "clienteHome";
-        } else if (usuario.equals("cliente empleado")){
+        }
+        else if(usuario.equals("cajero")){
+            return "cajeroHome";
+        }
+        else if (usuario.equals("cliente empleado")){
             return "clienteEmpleadoHome";}
         else {
             return "redirect:/";
