@@ -3,6 +3,7 @@ package uniandes.edu.co.proyecto.controller;
 import java.sql.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -106,14 +107,15 @@ public class CuentasController {
 
 
     @PostMapping("/cuentas/oficina/new/save")
-    public String cuentaGuardar(@ModelAttribute Cuenta cuenta) {
-    Date hoy = new Date(2024/4/3);
+    public String cuentaGuardar(@ModelAttribute Cuenta cuenta, @Param("num_doc_cliente")Integer num_doc_cliente) {
+        long millis=System.currentTimeMillis();
+        Date hoy = new Date(millis);
 
+        System.out.println("LAKJDLKAJSDLK" + cuenta.getId_oficina().getId());
         cuentaRepository.insertarCuenta(cuenta.getTipo(), cuenta.getEstado(), cuenta.getSaldo(),
-                hoy, cuenta.getNum_doc_cliente().getNum_id(),
-                cuenta.getId_oficina().getId());
+                hoy, num_doc_cliente, cuenta.getId_oficina().getId());
                 
-        return "redirect:/cuentas/oficina";
+        return "redirect:/cuentas";
     }
 
     @PostMapping("/cuentas/cambiar-estado/save")

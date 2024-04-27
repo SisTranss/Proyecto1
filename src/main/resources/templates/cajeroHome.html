@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Cliente Home</title>
+    <title>Cajero Home</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container">
-        <h1 class="my-4 text-center">Bienvenido Cliente</h1>
+        <h1 class="my-4 text-center">Bienvenido Cajero</h1>
+        <p>ID del Usuario: <span th:text="${usuarioId}"></span></p>
         <div class="text-center">
-            <a th:href="@{/cuentas/cliente(num_doc_cliente=${usuarioId})}" class="btn btn-primary m-2">Consultar cuentas</a>
+            <a th:href="@{/prestamosCajero}" class="btn btn-primary m-2">Gestionar prestamos</a>
             <a th:href="@{/transacciones/new}" class="btn btn-primary m-2">Transacciones BOTON TEMPORAL</a>
             <a th:href="@{/consignar/new}" class="btn btn-primary m-2">Consignar BOTON TEMPORAL</a>
             <a th:href="@{/retirar/new}" class="btn btn-primary m-2">Retirar BOTON TEMPORAL</a>

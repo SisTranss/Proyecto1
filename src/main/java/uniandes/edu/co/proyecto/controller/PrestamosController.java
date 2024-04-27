@@ -57,4 +57,10 @@ public class PrestamosController {
         return "redirect:/prestamos";
     }
 
+    @GetMapping("/prestamosCajero")
+    public String prestamosCajero(Model model){
+        model.addAttribute("prestamos", prestamoRepository.darPrestamos());
+        return "prestamosCajero";
+    }
+
 }

@@ -36,4 +36,22 @@ public interface OperacionCuentaRepository extends JpaRepository<OperacionCuenta
     void insertarOperacion_cuenta(@Param("tipo_operacion") String tipo_operacion, @Param("fecha_operacion") Date fecha_operacion, @Param("id_cuenta") Integer id_cuenta, @Param("monto_pago") Float monto_pago,
     @Param("punto_atencion") Integer punto_atencion);
 
+
+    @Query(value = "SELECT * FROM operaciones_cuentas  WHERE id_cuenta =:id AND FECHA_OPERACION BETWEEN :fechaInic and :fechaFin", nativeQuery = true)
+    Collection<OperacionCuenta> darOperacionesMes(Integer id, String fechaInic, String fechaFin);
+   
+    @Query(value = "SELECT sum(monto_pago) FROM(select * from operaciones_cuentas Where id_cuenta =:id and TIPO_OPERACION = 'consignar' AND FECHA_OPERACION BETWEEN :fechaInic and :fechaFin)", nativeQuery = true)
+    Integer darDineroInMesOPCuenta(Integer id, String fechaInic, String fechaFin);
+    
+    @Query(value = "SELECT sum(monto_pago) FROM(select * from operaciones_cuentas Where id_cuenta =:id and TIPO_OPERACION = 'retirar' AND FECHA_OPERACION BETWEEN :fechaInic and :fechaFin)", nativeQuery = true)
+    Integer darDineroOutMesOPCuenta(Integer id, String fechaInic, String fechaFin);
+    
+    //calcular dinero desde fin de mes hasta actualidad
+    
+    @Query(value = "SELECT sum(monto_pago) FROM(select * from operaciones_cuentas Where id_cuenta =:id and TIPO_OPERACION = 'consignar' AND FECHA_OPERACION BETWEEN :fechaFin and SYSDATE)", nativeQuery = true)
+    Integer dineroInOPCuenta(Integer id, String fechaFin);
+    
+    @Query(value = "SELECT sum(monto_pago) FROM(select * from operaciones_cuentas Where id_cuenta =:id and TIPO_OPERACION = 'retirar' AND FECHA_OPERACION BETWEEN :fechaFin and SYSDATE)", nativeQuery = true)
+    Integer dineroOutOPCuenta(Integer id, String fechaFin);
+    
 }

@@ -1,6 +1,5 @@
 package uniandes.edu.co.proyecto.controller;
 
-import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -12,11 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import uniandes.edu.co.proyecto.modelo.Oficina;
-import uniandes.edu.co.proyecto.modelo.OperacionPrestamo;
-//import uniandes.edu.co.proyecto.modelo.Operacion_cuenta;
 import uniandes.edu.co.proyecto.modelo.PuntoAtencion;
 import uniandes.edu.co.proyecto.repositorio.OficinaRepository;
-//import uniandes.edu.co.proyecto.modelo.Transaccion;
 import uniandes.edu.co.proyecto.repositorio.PuntoAtencionRepository;
 
 @Controller
@@ -76,19 +72,12 @@ public class puntosAtencionController {
     @GetMapping("/puntosAtencion/{id}/delete")
     public String puntoAtencionEliminar(@PathVariable("id") int id){
 
-        //Collection<Transaccion> transacciones = puntoAtencionRepository.darTransaccionesPunto(id);
-        //Collection<Operacion_cuenta> opCuentas = puntoAtencionRepository.darOperacionesCuentaPunto(id);
-        Collection<OperacionPrestamo> opPrestamos = puntoAtencionRepository.darOperacionesPrestamosPunto(id);
-
-        if(opPrestamos.isEmpty())
+        int transacciones = puntoAtencionRepository.darTransaccionesPunto(id);
+        int opCuentas = puntoAtencionRepository.darOperacionesCuentaPunto(id);
+        int opPrestamos = puntoAtencionRepository.darOperacionesPrestamosPunto(id);
+        if(opPrestamos==0 && opCuentas==0 && transacciones==0){
             puntoAtencionRepository.eliminarPuntoAtencion(id);
+        }
         return "redirect:/puntosAtencion";
     }
-    /*
-    @GetMapping("/puntosAtencion/{id}/delete")
-    public String puntoAtencionEliminar(@PathVariable("id") int id){
-        puntoAtencionRepository.eliminarPuntoAtencion(id);
-        return "redirect:/puntosAtencion";
-    }
-     */
 }
