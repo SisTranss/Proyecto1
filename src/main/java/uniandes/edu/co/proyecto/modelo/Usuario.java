@@ -155,5 +155,14 @@ public class Usuario {
     public void setDepartamento(String departamento) {
         this.departamento = departamento;
     }
+
+    public String getStringTipoUsuario(){
+        if(this.tipoUsuario == 1){
+            return "empleado";
+        }
+        else{
+            return "cliente";
+        }
+    }
     
 }   
