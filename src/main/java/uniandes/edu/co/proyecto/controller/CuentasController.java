@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,7 +26,7 @@ public class CuentasController {
     private UsuarioRepository usuarioRepository;
 
     @GetMapping("/cuentas")
-    public String cuentas(Model model, String tipo, Integer max_saldo, Integer min_saldo, Date ultima_transaccion) {
+    public String cuentas(Model model, String tipo, Integer max_saldo, Integer min_saldo, String ultima_transaccion) {
         
 
         System.out.println(ultima_transaccion);
@@ -51,8 +50,9 @@ public class CuentasController {
 
 
     @GetMapping("/cuentas/oficina")
-    public String oficinaCuentas(@RequestParam("id_oficina") int id_oficina, Model model, String tipo, Integer max_saldo, Integer min_saldo, Date ultima_transaccion) {
-        System.out.println(id_oficina);
+    public String oficinaCuentas(@RequestParam("id_oficina") Integer id_oficina, Model model, String tipo, Integer max_saldo, Integer min_saldo, String ultima_transaccion) {
+
+        System.out.println(ultima_transaccion);
         if((tipo ==null || tipo.equals("")) && max_saldo==null && min_saldo==null && (ultima_transaccion == null || ultima_transaccion.equals("")) )
         {
             model.addAttribute("cuentas", cuentaRepository.darCuentasPorIDoficina(id_oficina));
@@ -71,7 +71,15 @@ public class CuentasController {
     }
 
     @GetMapping("/cuentas/cliente")
-    public String clienteCuentas(@RequestParam("num_doc_cliente") Integer num_doc_cliente, Model model, String tipo, Integer max_saldo, Integer min_saldo, Date ultima_transaccion) {
+    public String clienteCuentas(
+        Integer num_doc_cliente,
+     Model model, 
+     String tipo, 
+     Integer max_saldo, 
+     Integer min_saldo, 
+     Date ultima_transaccion) {
+        System.out.println(num_doc_cliente);
+
         if((tipo ==null || tipo.equals("")) && max_saldo==null && min_saldo==null && (ultima_transaccion == null || ultima_transaccion.equals("")) )
         {
             model.addAttribute("cuentas", cuentaRepository.darCuentasPorCliente2(num_doc_cliente));
