@@ -20,22 +20,19 @@
                     <th>nacionalidad</th>
                     <th>telefono</th>
                     <th>tipo de usuario</th>
-                    <th>acciones</th>
+                  
                 </tr>
             </thead>
             <th:block th:each = "usuario:${usuarios}">
                 <tr>
                     <td th:text="${usuario.tipoDoc}"></td>
-                    <td th:text="${usuario.num_id}"></td>
+                    <td th:text="${usuario.numDoc}"></td>
                     <td th:text="${usuario.nombre}"></td>
                     <td th:text="${usuario.email}"></td>
                     <td th:text="${usuario.nacionalidad}"></td>
                     <td th:text="${usuario.telefono}"></td>
-                    <td th:text="${usuario.tipoUsuario}"></td>
-                    <td>
-                        <p>Editar</p>
-                        <p>Borrar</p>
-                    </td>
+                    <td th:text="${usuario.getStringTipoUsuario()}"></td>
+                   
                 </tr>
             </th:block>
         </table>

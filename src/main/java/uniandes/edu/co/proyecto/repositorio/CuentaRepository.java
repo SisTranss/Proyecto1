@@ -88,5 +88,7 @@ public interface CuentaRepository extends JpaRepository<Cuenta, Integer> {
     @Query(value = "UPDATE cuentas SET saldo = saldo + :monto_pago WHERE id = :id", nativeQuery = true)
     Integer actualizarSaldoConsignar(@Param("id") Integer id, @Param("monto_pago") Float monto_pago);
 
-
+    
+    @Query(value = "SELECT saldo from cuentas WHERE id =:id", nativeQuery = true)
+    Integer darDineroActual(@Param("id") Integer id);
 }

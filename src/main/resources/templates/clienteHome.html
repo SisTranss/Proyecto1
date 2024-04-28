@@ -1,28 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>General Home</title>
-    <!-- Incluir Bootstrap CSS -->
+    <title>Cliente Home</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container">
-        <h1 class="my-4 text-center">Bienvenido Administrador General</h1>
+        <h1 class="my-4 text-center">Bienvenido Cliente</h1>
+        <p>ID del Usuario: <span th:text="${usuarioId}"></span></p>
         <div class="text-center">
-            <a th:href="@{/usuarios/new}" class="btn btn-primary m-2">Crear Usuario</a>
-            <a th:href="@{/usuarios}" class="btn btn-primary m-2">Ver Lista de Usuarios</a>
-            <a th:href="@{/puntosAtencion}" class="btn btn-primary m-2">Gestionar Puntos Atencion</a>
-            <a th:href="@{/oficinas}" class="btn btn-primary m-2">Gestionar Oficinas</a>
-            <a th:href="@{/cuentas}" class="btn btn-primary m-2">Ver todas las cuentas</a>
+            <a th:href="@{/cuentas/cliente(num_doc_cliente=${usuarioId})}" class="btn btn-primary m-2">Consultar cuentas</a>
             <a th:href="@{/transacciones/new}" class="btn btn-primary m-2">Transacciones BOTON TEMPORAL</a>
             <a th:href="@{/consignar/new}" class="btn btn-primary m-2">Consignar BOTON TEMPORAL</a>
             <a th:href="@{/retirar/new}" class="btn btn-primary m-2">Retirar BOTON TEMPORAL</a>
-            <a th:href="@{/extractoBancario2}" class="btn btn-primary m-2">Emitir extracto bancario</a>
             <a th:href="@{/}" class="btn btn-primary m-2">Volver Atrás</a>
         </div>  
     </div>
 
-    <!-- Incluir Bootstrap JS y Popper.js -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>

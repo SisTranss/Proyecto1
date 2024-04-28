@@ -3,15 +3,14 @@ package uniandes.edu.co.proyecto.controller;
 import java.sql.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import uniandes.edu.co.proyecto.repositorio.CuentaRepository;
-import uniandes.edu.co.proyecto.repositorio.UsuarioRepository;
 import uniandes.edu.co.proyecto.modelo.Cuenta;
 
 import org.springframework.ui.Model;
@@ -21,9 +20,6 @@ public class CuentasController {
 
     @Autowired
     private CuentaRepository cuentaRepository;
-
-    @Autowired
-    private UsuarioRepository usuarioRepository;
 
     @GetMapping("/cuentas")
     public String cuentas(Model model, String tipo, Integer max_saldo, Integer min_saldo, String ultima_transaccion) {
@@ -52,7 +48,6 @@ public class CuentasController {
     @GetMapping("/cuentas/oficina")
     public String oficinaCuentas(@RequestParam("id_oficina") Integer id_oficina, Model model, String tipo, Integer max_saldo, Integer min_saldo, String ultima_transaccion) {
 
-        System.out.println(ultima_transaccion);
         if((tipo ==null || tipo.equals("")) && max_saldo==null && min_saldo==null && (ultima_transaccion == null || ultima_transaccion.equals("")) )
         {
             model.addAttribute("cuentas", cuentaRepository.darCuentasPorIDoficina(id_oficina));
@@ -107,23 +102,21 @@ public class CuentasController {
 
 
     @PostMapping("/cuentas/oficina/new/save")
-    public String cuentaGuardar(@ModelAttribute Cuenta cuenta) {
-    Date hoy = new Date(2024/4/3);
+    public String cuentaGuardar(@ModelAttribute Cuenta cuenta, @Param("num_doc_cliente")Integer num_doc_cliente) {
+        long millis=System.currentTimeMillis();
+        Date hoy = new Date(millis);
 
-        Integer num_id = usuarioRepository.darIdUsuario(cuenta.getNum_doc_cliente().getNum_id());
-
+        System.out.println("LAKJDLKAJSDLK" + cuenta.getId_oficina().getId());
         cuentaRepository.insertarCuenta(cuenta.getTipo(), cuenta.getEstado(), cuenta.getSaldo(),
-                hoy, num_id,
-                cuenta.getId_oficina().getId());
+                hoy, num_doc_cliente, cuenta.getId_oficina().getId());
                 
-        return "redirect:/cuentas/oficina?id_oficina=" + cuenta.getId_oficina().getId();
+        return "redirect:/cuentas";
     }
 
-    @GetMapping("/cuentas/{id}/cambiar-estado/save")
-    public String actualizarCuentaGuardar(@RequestParam("nuevoEstado") String nuevoEstado, @RequestParam("cuentaID") Integer cuentaID, @RequestParam("id_oficina") Integer id_oficina) {
+    @PostMapping("/cuentas/cambiar-estado/save")
+    public String actualizarCuentaGuardar(@RequestParam("nuevoEstado") String nuevoEstado, @RequestParam("cuentaID") Integer cuentaID) {
         cuentaRepository.actualizarEstadoCuenta(cuentaID, nuevoEstado);
-        return "redirect:/cuentas/oficina?id_oficina=" + id_oficina;
+        return "redirect:/oficina/cuentas";
     }
-
 
 }
