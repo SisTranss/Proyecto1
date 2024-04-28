@@ -22,7 +22,7 @@ public class CuentasController {
     private CuentaRepository cuentaRepository;
 
     @GetMapping("/cuentas")
-    public String cuentas(Model model, String tipo, Integer max_saldo, Integer min_saldo, Date ultima_transaccion) {
+    public String cuentas(Model model, String tipo, Integer max_saldo, Integer min_saldo, String ultima_transaccion) {
         
 
         System.out.println(ultima_transaccion);
@@ -46,7 +46,7 @@ public class CuentasController {
 
 
     @GetMapping("/cuentas/oficina")
-    public String oficinaCuentas(@RequestParam("id_oficina") int id_oficina, Model model, String tipo, Integer max_saldo, Integer min_saldo, Date ultima_transaccion) {
+    public String oficinaCuentas(@RequestParam("id_oficina") Integer id_oficina, Model model, String tipo, Integer max_saldo, Integer min_saldo, String ultima_transaccion) {
 
         if((tipo ==null || tipo.equals("")) && max_saldo==null && min_saldo==null && (ultima_transaccion == null || ultima_transaccion.equals("")) )
         {

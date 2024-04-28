@@ -43,10 +43,10 @@
 
                     <form th:action="@{/cuentas/oficina}" method="get">
                         <label for="id_oficina">id_oficina</label>
-                        <input type="text" class="form-control" id="id_oficina" name="id_oficina" required>
+                        <input type="number" class="form-control" id="id_oficina" name="id_oficina" required>
                         <label>Fitrar por fecha ultima transaccion:</label>
                         <label for="fecha-ultima-transaccion">Fecha:</label>
-                        <input class="form-control" type="date" id="fecha-ultima-transaccion" name="ultima_transaccion" required>
+                        <input class="form-control" type="text" id="fecha-ultima-transaccion" name="ultima_transaccion" required>
                         <button type="submit" class="btn btn-secondary">Filtrar</button>
                     </form>
                 </div>
@@ -64,7 +64,7 @@
                     <th>estado</th>
                     <th>saldo</th>
                     <th>ultima transaccion</th>
-                    <th>numero documento cliente</th>
+                    <th>numero ID cliente</th>
                     <th>id oficina</th>
                     <th>acciones</th>
                 </tr>

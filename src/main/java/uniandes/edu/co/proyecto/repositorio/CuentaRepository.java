@@ -47,8 +47,9 @@ public interface CuentaRepository extends JpaRepository<Cuenta, Integer> {
     @Query(value = "SELECT * FROM cuentas WHERE saldo BETWEEN :min_saldo AND :max_saldo", nativeQuery = true)
     Collection<Cuenta> darCuentasPorRangoSaldos(@Param("min_saldo") Integer min_saldo, @Param("max_saldo") Integer max_saldo);
 
-    @Query(value = "SELECT * FROM cuentas WHERE ultima_transaccion = :ultima_transaccion", nativeQuery = true)
-    Collection<Cuenta> darCuentasPorUltimoMov(@Param("ultima_transaccion") Date ultima_transaccion);
+    @Query(value = "SELECT * FROM cuentas WHERE TRUNC(ultima_transaccion) = TO_DATE(:ultima_transaccion, 'YYYY-MM-DD')", nativeQuery = true)
+    Collection<Cuenta> darCuentasPorUltimoMov(@Param("ultima_transaccion") String ultima_transaccion);
+
 
     @Query(value = "SELECT * FROM cuentas WHERE tipo = :tipo AND id_oficina = :id_oficina", nativeQuery = true)
     Collection<Cuenta> darCuentasPorTipoCuentayIDoficina(@Param("tipo") String tipo, @Param("id_oficina") Integer id_oficina);
@@ -56,8 +57,9 @@ public interface CuentaRepository extends JpaRepository<Cuenta, Integer> {
     @Query(value = "SELECT * FROM cuentas WHERE saldo BETWEEN :min_saldo AND :max_saldo AND id_oficina = :id_oficina", nativeQuery = true)
     Collection<Cuenta> darCuentasPorRangoSaldosyIDoficina(@Param("min_saldo") Integer min_saldo, @Param("max_saldo") Integer max_saldo, @Param("id_oficina") Integer id_oficina);
 
-    @Query(value = "SELECT * FROM cuentas WHERE ultima_transaccion = :ultima_transaccion AND id_oficina = :id_oficina", nativeQuery = true)
-    Collection<Cuenta> darCuentasPorUltimoMovyIDoficina(@Param("ultima_transaccion") Date ultima_transaccion, @Param("id_oficina") Integer id_oficina);
+    @Query(value = "SELECT * FROM cuentas WHERE TRUNC(ultima_transaccion) = TO_DATE(:ultima_transaccion, 'YYYY-MM-DD') AND id_oficina = :id_oficina", nativeQuery = true)
+    Collection<Cuenta> darCuentasPorUltimoMovyIDoficina(@Param("ultima_transaccion") String ultima_transaccion, @Param("id_oficina") Integer id_oficina);
+
 
     @Query(value = "SELECT * FROM cuentas WHERE tipo = :tipo AND num_doc_cliente = :num_doc_cliente", nativeQuery = true)
     Collection<Cuenta> darCuentasPorTipoCuentayCliente(@Param("num_doc_cliente") Integer num_doc_cliente, @Param("tipo") String tipo);
@@ -65,8 +67,9 @@ public interface CuentaRepository extends JpaRepository<Cuenta, Integer> {
     @Query(value = "SELECT * FROM cuentas WHERE saldo BETWEEN :min_saldo AND :max_saldo AND num_doc_cliente = :num_doc_cliente", nativeQuery = true)
     Collection<Cuenta> darCuentasPorRangoSaldosyCliente(@Param("min_saldo") Integer min_saldo, @Param("max_saldo") Integer max_saldo, @Param("num_doc_cliente") Integer num_doc_cliente);
 
-    @Query(value = "SELECT * FROM cuentas WHERE ultima_transaccion = :ultima_transaccion AND num_doc_cliente = :num_doc_cliente", nativeQuery = true)
-    Collection<Cuenta> darCuentasPorUltimoMovyCliente(@Param("ultima_transaccion") Date ultima_transaccion, @Param("num_doc_cliente") Integer num_doc_cliente);
+    @Query(value = "SELECT * FROM cuentas WHERE TRUNC(ultima_transaccion) = TO_DATE(:ultima_transaccion, 'YYYY-MM-DD') AND num_doc_cliente = :num_doc_cliente", nativeQuery = true)
+    Collection<Cuenta> darCuentasPorUltimoMovyCliente(@Param("ultima_transaccion") String ultima_transaccion, @Param("num_doc_cliente") Integer num_doc_cliente);
+
 
 
 
