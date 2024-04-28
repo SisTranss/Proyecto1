@@ -2,7 +2,6 @@
 <html>
 <head>
     <title>General Home</title>
-    <!-- Incluir Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
@@ -14,6 +13,7 @@
             <a th:href="@{/puntosAtencion}" class="btn btn-primary m-2">Gestionar Puntos Atencion</a>
             <a th:href="@{/oficinas}" class="btn btn-primary m-2">Gestionar Oficinas</a>
             <a th:href="@{/cuentas}" class="btn btn-primary m-2">Ver todas las cuentas</a>
+            <a th:href="@{/consultaCliente}" class="btn btn-primary m-2">Consultar un cliente</a>
             <a th:href="@{/transacciones/new}" class="btn btn-primary m-2">Transacciones BOTON TEMPORAL</a>
             <a th:href="@{/consignar/new}" class="btn btn-primary m-2">Consignar BOTON TEMPORAL</a>
             <a th:href="@{/retirar/new}" class="btn btn-primary m-2">Retirar BOTON TEMPORAL</a>
@@ -22,7 +22,6 @@
         </div>  
     </div>
 
-    <!-- Incluir Bootstrap JS y Popper.js -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
