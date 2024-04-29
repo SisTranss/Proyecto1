@@ -42,10 +42,12 @@ public interface CuentaRepository extends JpaRepository<Cuenta, Integer> {
     @Transactional
     @Query(value = "UPDATE cuentas SET saldo = saldo + :monto_pago WHERE id = :id", nativeQuery = true)
     Integer actualizarSaldoConsignar(@Param("id") Integer id, @Param("monto_pago") Float monto_pago);
-
     
     @Query(value = "SELECT saldo from cuentas WHERE id =:id", nativeQuery = true)
     Integer darDineroActual(@Param("id") Integer id);
+  
+    @Query(value = "SELECT * FROM cuentas WHERE num_doc_cliente = :num_doc_cliente AND id_oficina = :id_oficina", nativeQuery = true)
+    Collection<Cuenta> darCuentasdeClienteporOficina(@Param("num_doc_cliente") Integer num_doc_cliente, @Param("id_oficina") Integer id_oficina);
 
     //TODAS LAS CUENTAS
 

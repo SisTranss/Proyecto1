@@ -1,5 +1,7 @@
 package uniandes.edu.co.proyecto.controller;
 
+import java.sql.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,9 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import uniandes.edu.co.proyecto.modelo.Usuario;
 import uniandes.edu.co.proyecto.repositorio.ClienteRepository;
+import uniandes.edu.co.proyecto.repositorio.CuentaRepository;
 import uniandes.edu.co.proyecto.repositorio.EmpleadoRepository;
 import uniandes.edu.co.proyecto.repositorio.LoginRepository;
+import uniandes.edu.co.proyecto.repositorio.PrestamoRepository;
 import uniandes.edu.co.proyecto.repositorio.UsuarioRepository;
+import uniandes.edu.co.proyecto.repositorio.ClienteRepository.ClienteInfo;
 
 @Controller
 public class UsuarioController {
@@ -29,6 +34,12 @@ public class UsuarioController {
 
     @Autowired
     private EmpleadoRepository empleadoRepository;
+
+    @Autowired
+    private CuentaRepository cuentaRepository;
+
+    @Autowired
+    private PrestamoRepository  prestamoRepository;
 
     @GetMapping("/usuarios")
     public String usuarios(Model model){
@@ -76,6 +87,27 @@ public class UsuarioController {
             empleadoRepository.insertarEmpleado(id, tipo_Empleado);
         }
         return "redirect:/usuarios";
+    }
+
+    @GetMapping("/consultaCliente")
+    public String usuarioConsultar(Model model, Integer idCliente, Integer idOficina) {
+
+        if (idCliente != null) {
+            if((idOficina == null || idOficina.equals("") ))
+            {
+                ClienteInfo clienteInfo = clienteRepository.darInfoCliente(idCliente);
+                model.addAttribute("clienteInfo", clienteInfo);
+                model.addAttribute("cuentas", cuentaRepository.darCuentasPorCliente2(idCliente));
+                model.addAttribute("prestamos", prestamoRepository.darPrestamosPorCliente(idCliente));
+            }
+            else if ((idOficina != null)){
+                model.addAttribute("clienteInfo", clienteRepository.darInfoCliente(idCliente));
+                model.addAttribute("cuentas", cuentaRepository.darCuentasdeClienteporOficina(idCliente, idOficina));
+                model.addAttribute("prestamos", prestamoRepository.darPrestamosPorCliente(idCliente));
+            }
+        }
+        
+        return "consultaCliente";
     }
 
     @GetMapping("/usuarios/{id}/edit")
