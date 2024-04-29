@@ -22,23 +22,23 @@ public class CuentasController {
     private CuentaRepository cuentaRepository;
 
     @GetMapping("/cuentas")
-    public String cuentas(Model model, String tipo, Integer max_saldo, Integer min_saldo, String ultima_transaccion) {
-        
+    public String cuentas(Model model, String tipo, Integer max_saldo, Integer min_saldo, String ultima_transaccion, Integer num_doc_cliente) {
 
-        System.out.println(ultima_transaccion);
-
-        if((tipo ==null || tipo.equals("")) && max_saldo==null && min_saldo==null && (ultima_transaccion == null || ultima_transaccion.equals("")) )
+        if((tipo ==null || tipo.equals("")) && max_saldo==null && min_saldo==null && (ultima_transaccion == null || ultima_transaccion.equals("")) && num_doc_cliente==null )
         {
             model.addAttribute("cuentas", cuentaRepository.darCuentas());
         }
-        else if ((tipo != null && max_saldo == null && min_saldo ==null && ultima_transaccion == null )){
+        else if ((num_doc_cliente==null && tipo != null && max_saldo == null && min_saldo ==null && ultima_transaccion == null )){
             model.addAttribute("cuentas", cuentaRepository.darCuentasPorTipo(tipo));
         }
-        else if ((max_saldo!=null && min_saldo!=null && tipo ==null && ultima_transaccion == null)){
+        else if ((num_doc_cliente==null && max_saldo!=null && min_saldo!=null && tipo ==null && ultima_transaccion == null)){
             model.addAttribute("cuentas", cuentaRepository.darCuentasPorRangoSaldos(min_saldo, max_saldo));
         } 
-        else if ((max_saldo==null && min_saldo==null && tipo ==null && ultima_transaccion != null)){
+        else if ((num_doc_cliente==null && max_saldo==null && min_saldo==null && tipo ==null && ultima_transaccion != null)){
             model.addAttribute("cuentas", cuentaRepository.darCuentasPorUltimoMov(ultima_transaccion));
+        }
+        else if(num_doc_cliente!=null && max_saldo==null && min_saldo==null && tipo ==null && ultima_transaccion == null){
+            model.addAttribute("cuentas", cuentaRepository.darCuentasPorCliente2(num_doc_cliente));
         }
 
         return "cuentas";
@@ -46,37 +46,36 @@ public class CuentasController {
 
 
     @GetMapping("/cuentas/oficina")
-    public String oficinaCuentas(@RequestParam("id_oficina") Integer id_oficina, Model model, String tipo, Integer max_saldo, Integer min_saldo, String ultima_transaccion) {
+    public String oficinaCuentas(@RequestParam("id_oficina") Integer id_oficina, Model model, String tipo, Integer max_saldo, Integer min_saldo, String ultima_transaccion, Integer num_doc_cliente) {
 
-        if((tipo ==null || tipo.equals("")) && max_saldo==null && min_saldo==null && (ultima_transaccion == null || ultima_transaccion.equals("")) )
+        if((tipo ==null || tipo.equals("")) && max_saldo==null && min_saldo==null && (ultima_transaccion == null || ultima_transaccion.equals("")) && num_doc_cliente==null )
         {
             model.addAttribute("cuentas", cuentaRepository.darCuentasPorIDoficina(id_oficina));
         }
-        else if ((tipo != null && max_saldo == null && min_saldo ==null && ultima_transaccion == null )){
+        else if ((num_doc_cliente==null && tipo != null && max_saldo == null && min_saldo ==null && ultima_transaccion == null )){
             model.addAttribute("cuentas", cuentaRepository.darCuentasPorTipoCuentayIDoficina(tipo, id_oficina));
         }
-        else if ((max_saldo!=null && min_saldo!=null && tipo ==null && ultima_transaccion == null)){
+        else if ((num_doc_cliente==null && max_saldo!=null && min_saldo!=null && tipo ==null && ultima_transaccion == null)){
             model.addAttribute("cuentas", cuentaRepository.darCuentasPorRangoSaldosyIDoficina(min_saldo, max_saldo, id_oficina));
         } 
-        else if ((max_saldo==null && min_saldo==null && tipo ==null && ultima_transaccion != null)){
+        else if ((num_doc_cliente==null && max_saldo==null && min_saldo==null && tipo ==null && ultima_transaccion != null)){
             model.addAttribute("cuentas", cuentaRepository.darCuentasPorUltimoMovyIDoficina(ultima_transaccion, id_oficina));
+
+        } else if(num_doc_cliente!=null && max_saldo==null && min_saldo==null && tipo ==null && ultima_transaccion == null){
+            model.addAttribute("cuentas", cuentaRepository.darCuentasPorClienteyIDoficina(num_doc_cliente, id_oficina));
         }
 
         return "cuentasOficina";
     }
 
     @GetMapping("/cuentas/cliente")
-    public String clienteCuentas(
-        Integer num_doc_cliente,
-     Model model, 
-     String tipo, 
-     Integer max_saldo, 
-     Integer min_saldo, 
-     Date ultima_transaccion) {
-        System.out.println(num_doc_cliente);
-
+    public String clienteCuentas( Integer num_doc_cliente, Model model, String tipo, Integer max_saldo, Integer min_saldo, String ultima_transaccion) {
         if((tipo ==null || tipo.equals("")) && max_saldo==null && min_saldo==null && (ultima_transaccion == null || ultima_transaccion.equals("")) )
         {
+            System.out.println("CUENTAS");
+            System.out.println(cuentaRepository.darCuentasPorCliente2(num_doc_cliente));
+            Class<?> t = num_doc_cliente.getClass();
+            System.out.println("El tipo de 'texto' es: " + t.getName());
             model.addAttribute("cuentas", cuentaRepository.darCuentasPorCliente2(num_doc_cliente));
         }
         else if ((tipo != null && max_saldo == null && min_saldo ==null && ultima_transaccion == null )){
@@ -106,17 +105,23 @@ public class CuentasController {
         long millis=System.currentTimeMillis();
         Date hoy = new Date(millis);
 
-        System.out.println("LAKJDLKAJSDLK" + cuenta.getId_oficina().getId());
         cuentaRepository.insertarCuenta(cuenta.getTipo(), cuenta.getEstado(), cuenta.getSaldo(),
                 hoy, num_doc_cliente, cuenta.getId_oficina().getId());
                 
-        return "redirect:/cuentas";
+        return "gerenteOficinaHome";
     }
 
-    @PostMapping("/cuentas/cambiar-estado/save")
-    public String actualizarCuentaGuardar(@RequestParam("nuevoEstado") String nuevoEstado, @RequestParam("cuentaID") Integer cuentaID) {
+    @GetMapping("/cuentas/oficina/{id}/cambiar-estado/save")
+    public String actualizarCuentaOficinaGuardar(@RequestParam("nuevoEstado") String nuevoEstado, @RequestParam("cuentaID") Integer cuentaID, Integer id_oficina) {
         cuentaRepository.actualizarEstadoCuenta(cuentaID, nuevoEstado);
-        return "redirect:/oficina/cuentas";
+        return "redirect:/cuentas/oficina?id_oficina=" + id_oficina;
+    }
+
+    @GetMapping("/cuentas/cliente/{id}/cambiar-estado/save")
+    public String actualizarCuentaClienteGuardar(@RequestParam("nuevoEstado") String nuevoEstado, @RequestParam("cuentaID") Integer cuentaID, Integer num_doc_cliente) {
+        System.out.println(num_doc_cliente);
+        cuentaRepository.actualizarEstadoCuenta(cuentaID, nuevoEstado);
+        return "redirect:/cuentas/cliente?num_doc_cliente=" + num_doc_cliente;
     }
 
 }
