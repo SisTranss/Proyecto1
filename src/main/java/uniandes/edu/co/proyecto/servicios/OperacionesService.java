@@ -1,5 +1,8 @@
 package uniandes.edu.co.proyecto.servicios;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Collection;
 
 import org.springframework.stereotype.Service;
@@ -21,19 +24,21 @@ public class OperacionesService {
 
     @Transactional(isolation = Isolation.SERIALIZABLE, readOnly = true, rollbackFor = Exception.class)
     public Collection<OperacionCuenta> darOperacionesCuentaSerializable(int id_cuenta) throws InterruptedException {
-        Collection<OperacionCuenta> operaciones = operacionesRepository.darOperacionesPorCuenta(id_cuenta); // Consultar OperacionCuenta.
+        LocalDate fecha = LocalDate.now().minusDays(30);
+        Collection<OperacionCuenta> operaciones = operacionesRepository.darOperacionesPorCuentaUltimoMes(id_cuenta,fecha); // Consultar OperacionCuenta.
         System.out.println("Operaciones encontradas: " + operaciones.size());
         Thread.sleep(30000);
-        operaciones = operacionesRepository.darOperacionesPorCuenta(id_cuenta);
+        operaciones = operacionesRepository.darOperacionesPorCuentaUltimoMes(id_cuenta,fecha);
         return operaciones;
     }
 
     @Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true, rollbackFor = Exception.class)
     public Collection<OperacionCuenta> darOperacionesCuentaReadCommited(int id_cuenta) throws InterruptedException {
-        Collection<OperacionCuenta> operaciones = operacionesRepository.darOperacionesPorCuenta(id_cuenta); // Consultar OperacionCuenta.
+        LocalDate fecha = LocalDate.now().minusDays(30);
+        Collection<OperacionCuenta> operaciones = operacionesRepository.darOperacionesPorCuentaUltimoMes(id_cuenta,fecha); // Consultar OperacionCuenta.
         System.out.println("Operaciones encontradas: " + operaciones.size());
         Thread.sleep(30000);
-        operaciones = operacionesRepository.darOperacionesPorCuenta(id_cuenta);
+        operaciones = operacionesRepository.darOperacionesPorCuentaUltimoMes(id_cuenta,fecha);
         return operaciones;
     }
 
