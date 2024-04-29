@@ -17,6 +17,9 @@ public interface PrestamoRepository extends JpaRepository<Prestamo, Integer>{
     @Query(value = "SELECT * FROM prestamos", nativeQuery = true)
     Collection<Prestamo> darPrestamos();
 
+    @Query(value = "SELECT * FROM prestamos WHERE num_doc_cliente = :num_doc_cliente", nativeQuery = true)
+    Collection<Prestamo> darPrestamosPorCliente(@Param("num_doc_cliente") Integer num_doc_cliente);
+
     @Query(value = "SELECT * FROM prestamos WHERE id = :id", nativeQuery = true)
     Prestamo darPrestamo(@Param("id") Integer id);
 

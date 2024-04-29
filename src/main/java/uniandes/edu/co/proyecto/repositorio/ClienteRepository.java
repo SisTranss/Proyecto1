@@ -12,6 +12,15 @@ import uniandes.edu.co.proyecto.modelo.Cliente;
 
 public interface ClienteRepository extends JpaRepository<Cliente, Integer>{
 
+    public interface ClienteInfo {
+        String getNombre();
+        String getTipo_Doc();
+        Integer getNum_Doc();
+        Integer getTipo_Persona();
+        String getEmail();
+        String getTelefono();
+    }
+
     @Query(value = "SELECT * FROM clientes",nativeQuery = true)
      Collection<Cliente> darClientes();
  
@@ -33,4 +42,8 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer>{
      @Query(value =  "DELETE FROM clientes WHERE num_id = :num_id", nativeQuery = true)
      void eliminarCliente(@Param("num_id") int num_id);
      
+    @Query(value = "SELECT USUARIOS.NOMBRE,USUARIOS.TIPO_DOC,USUARIOS.NUM_DOC,CLIENTES.TIPO_PERSONA,USUARIOS.EMAIL,USUARIOS.TELEFONO\r\n" + //
+                "FROM USUARIOS JOIN CLIENTES ON USUARIOS.ID = CLIENTES.NUM_ID\r\n" + //
+                "WHERE CLIENTES.NUM_ID = :num_id",nativeQuery = true)
+    ClienteInfo darInfoCliente(@Param("num_id") int num_id);
  }

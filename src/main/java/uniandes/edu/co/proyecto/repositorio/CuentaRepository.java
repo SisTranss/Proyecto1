@@ -36,7 +36,8 @@ public interface CuentaRepository extends JpaRepository<Cuenta, Integer> {
     @Query(value = "SELECT * FROM cuentas WHERE num_doc_cliente = :num_doc_cliente", nativeQuery = true)
     Collection<Cuenta> darCuentasPorCliente2(@Param("num_doc_cliente") Integer num_doc_cliente);
 
-
+    @Query(value = "SELECT * FROM cuentas WHERE num_doc_cliente = :num_doc_cliente AND id_oficina = :id_oficina", nativeQuery = true)
+    Collection<Cuenta> darCuentasdeClienteporOficina(@Param("num_doc_cliente") Integer num_doc_cliente, @Param("id_oficina") Integer id_oficina);
 
     @Query(value = "SELECT c.* FROM cuentas c INNER JOIN usuarios u ON c.num_doc_cliente = u.id WHERE u.num_doc = :num_doc", nativeQuery = true)
     Collection<Cuenta> darCuentasPorCliente(@Param("num_doc") String num_doc);

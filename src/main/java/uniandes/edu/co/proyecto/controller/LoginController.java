@@ -68,7 +68,7 @@ public class LoginController {
         else if (usuario.equals("cliente empleado")){
             return "clienteEmpleadoHome";}
         else {
-            return "redirect:/";
+            return "/";
         }   
 
         /* 
