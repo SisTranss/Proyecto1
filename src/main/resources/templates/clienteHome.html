@@ -10,9 +10,9 @@
         <p>ID del Usuario: <span th:text="${usuarioId}"></span></p>
         <div class="text-center">
             <a th:href="@{/cuentas/cliente(num_doc_cliente=${usuarioId})}" class="btn btn-primary m-2">Consultar cuentas</a>
-            <a th:href="@{/transacciones/new}" class="btn btn-primary m-2">Transacciones BOTON TEMPORAL</a>
-            <a th:href="@{/consignar/new}" class="btn btn-primary m-2">Consignar BOTON TEMPORAL</a>
-            <a th:href="@{/retirar/new}" class="btn btn-primary m-2">Retirar BOTON TEMPORAL</a>
+            <a th:href="@{/transacciones/new}" class="btn btn-primary m-2">Transacciones</a>
+            <a th:href="@{/consignar/new}" class="btn btn-primary m-2">Consignar</a>
+            <a th:href="@{/retirar/new}" class="btn btn-primary m-2">Retirar</a>
             <a th:href="@{/}" class="btn btn-primary m-2">Volver Atrás</a>
         </div>  
     </div>

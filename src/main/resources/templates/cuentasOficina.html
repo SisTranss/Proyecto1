@@ -49,6 +49,15 @@
                         <input class="form-control" type="text" id="fecha-ultima-transaccion" name="ultima_transaccion" required>
                         <button type="submit" class="btn btn-secondary">Filtrar</button>
                     </form>
+
+                    <form th:action="@{/cuentas}" method="get">
+                        <label for="id_oficina">id_oficina</label>
+                        <input type="number" class="form-control" id="id_oficina" name="id_oficina" required>
+                        <label>Fitrar por cliente:</label>
+                        <label for="fecha-ultima-transaccion">ID cliente:</label>
+                        <input class="form-control" type="text" id="num_doc_cliente" name="num_doc_cliente" required>
+                        <button type="submit" class="btn btn-secondary">Filtrar</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -80,10 +89,10 @@
                     <td th:text="${cuenta.id_oficina.getId()}"></td>
                     <td>
 
-                        <a th:href="@{/cuentas/{id}/cambiar-estado/save(cuentaID=${cuenta.id}, nuevoEstado='cerrada', id_oficina=${cuenta.id_oficina.getId()})}" 
+                        <a th:href="@{/cuentas/oficina/{id}/cambiar-estado/save(cuentaID=${cuenta.id}, nuevoEstado='cerrada', id_oficina=${cuenta.id_oficina.getId()})}" 
                         onclick="return confirm('¿Estás seguro de cerrar esta cuenta?')">Cerrar cuenta</a>
 
-                        <a th:href="@{/cuentas/{id}/cambiar-estado/save(cuentaID=${cuenta.id}, nuevoEstado='desactivada', id_oficina=${cuenta.id_oficina.getId()})}" 
+                        <a th:href="@{/cuentas/oficina/{id}/cambiar-estado/save(cuentaID=${cuenta.id}, nuevoEstado='desactivada', id_oficina=${cuenta.id_oficina.getId()})}" 
                         onclick="return confirm('¿Estás seguro de desactivar esta cuenta?')">Desactivar cuenta</a>
 
                     </td>

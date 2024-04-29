@@ -40,7 +40,14 @@
                     <form th:action="@{/cuentas}" method="get">
                         <label>Fitrar por fecha ultima transaccion:</label>
                         <label for="fecha-ultima-transaccion">Fecha:</label>
-                        <input class="form-control" type="date" id="fecha-ultima-transaccion" name="ultima_transaccion" required>
+                        <input class="form-control" type="text" id="fecha-ultima-transaccion" name="ultima_transaccion" required>
+                        <button type="submit" class="btn btn-secondary">Filtrar</button>
+                    </form>
+
+                    <form th:action="@{/cuentas}" method="get">
+                        <label>Fitrar por cliente:</label>
+                        <label for="fecha-ultima-transaccion">ID cliente:</label>
+                        <input class="form-control" type="text" id="num_doc_cliente" name="num_doc_cliente" required>
                         <button type="submit" class="btn btn-secondary">Filtrar</button>
                     </form>
                 </div>
@@ -71,10 +78,6 @@
                     <td th:text="${cuenta.ultima_transaccion}"></td>
                     <td th:text="${cuenta.getNum_doc_cliente().getNum_id()}"></td>
                     <td th:text="${cuenta.id_oficina.getId()}"></td>
-                    <td>
-                        <p>Editar</p>
-                        <p>Borrar</p>
-                    </td>
                 </tr>
             </th:block>
         </table>
