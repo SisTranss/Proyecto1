@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumen</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+
+</head>
+<body>
+    <div>
+        <br>
+        <div class="container w-25">
+            <div class="card border border-2 mx-auto" style="width: max-content;">
+               <h1>Bienvenid@ <strong th:text="${clienteInfo.getNombre()}"></strong></h1>
+            </div>
+        </div>
+        <br>
+        <h3>Estas son tus cuentas y prestamos en nuestro banco:</h3>
+        <br>
+        <table class="table table-hover table-bordered">
+            <h1>Lista de Cuentas</h1>
+            <thead class="thead-dark">
+                <tr>
+                    <th>numero cuenta</th>
+                    <th>tipo</th>
+                    <th>estado</th>
+                    <th>saldo</th>
+                    <th>ultima transaccion</th>
+                    <th>Id Cliente</th>
+                    <th>id oficina</th>
+                </tr>
+            </thead>
+            <th:block th:each = "cuenta:${cuentas}">
+                <tr>
+                    <td th:text="${cuenta.id}"></td>
+                    <td th:text="${cuenta.tipo}"></td>
+                    <td th:text="${cuenta.estado}"></td>
+                    <td th:text="${cuenta.saldo}"></td>
+                    <td th:text="${cuenta.ultima_transaccion}"></td>
+                    <td th:text="${cuenta.getNum_doc_cliente().getNum_id()}"></td>
+                    <td th:text="${cuenta.id_oficina.getId()}"></td>
+                </tr>
+            </th:block>
+        </table>
+
+
+        <table class="table table-hover table-bordered">
+            <h1>Lista de Prestamos</h1>
+            <thead class="thead-dark">
+                <tr>
+                    <th>Id Prestamo</th>
+                    <th>Proposito</th>
+                    <th>Estado</th>
+                    <th>Monto</th>
+                    <th>Tasa</th>
+                    <th>Cuotas</th>
+                    <th>Dia Pago</th>
+                    <th>Valor cuota</th>
+                </tr>
+            </thead>
+            <th:block th:each = "prestamo:${prestamos}">
+                <tr>
+                    <td th:text="${prestamo.id}"></td>
+                    <td th:text="${prestamo.proposito}"></td>
+                    <td th:text="${prestamo.estado}"></td>
+                    <td th:text="${prestamo.monto}"></td>
+                    <td th:text="${prestamo.tasa}"></td>
+                    <td th:text="${prestamo.cuotas}"></td>
+                    <td th:text="${prestamo.dia_pago}"></td>
+                    <td th:text="${prestamo.valor_cuota}"></td>
+                </tr>
+            </th:block>
+        </table>
+        
+        <a th:href="@{/}" class="btn btn-primary m-2" style="background-color: red;">Volver Atrás</a>
+    </div>
+</body>
+</html>

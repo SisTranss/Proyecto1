@@ -110,6 +110,19 @@ public class UsuarioController {
         return "consultaCliente";
     }
 
+    @GetMapping("/resumenCliente")
+    public String clienteConsultar(Model model, Integer idCliente) {
+
+        if (idCliente != null) {
+            ClienteInfo clienteInfo = clienteRepository.darInfoCliente(idCliente);
+            model.addAttribute("clienteInfo", clienteInfo);
+            model.addAttribute("cuentas", cuentaRepository.darCuentasPorCliente2(idCliente));
+            model.addAttribute("prestamos", prestamoRepository.darPrestamosPorCliente(idCliente));
+        }
+        
+        return "consultaClienteC";
+    }
+
     @GetMapping("/usuarios/{id}/edit")
     public String usuarioEditarForm(@PathVariable("id") int id, Model model) {
         Usuario usuario = usuarioRepository.darUsuario(id);
