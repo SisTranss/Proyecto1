@@ -9,7 +9,6 @@ import org.springframework.data.repository.query.Param;
 
 import jakarta.transaction.Transactional;
 import uniandes.edu.co.proyecto.modelo.Cliente;
-import uniandes.edu.co.proyecto.modelo.Prestamo;
 
 public interface ClienteRepository extends JpaRepository<Cliente, Integer>{
 
