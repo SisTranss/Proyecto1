@@ -5,24 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Usuarios</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 
 </head>
 <body>
     <div>
 
         <div class="container w-25">
+
+
             <div class="card border border-2 mx-auto">
-                <h5 class="card-header" role="button" id="headingOne">
-                    <a href="#" class="collapsed d-block" data-toggle="collapse" data-target="#busqueda">
-                        Búsqueda avanzada
-                    </a>
+                <h5 class="card-header" role="button" data-toggle="collapse" data-target="#filtroTipo" aria-expanded="false" aria-controls="filtroTipo">
+                    Filtrar por tipo
                 </h5>
-        
-                <div id="busqueda" class="collapse show">
+
+                <div id="filtroTipo" class="collapse">
                     <form th:action="@{/cuentas/cliente}" method="get">
                         <label for="num_doc_cliente">num doc cliente</label>
                         <input type="text" class="form-control" id="num_doc_cliente" name="num_doc_cliente" required>
-                        <label for="tipo">Filtrar por tipo:</label>
                         <select id="tipo" name="tipo">
                             <option value="">Todos</option>
                             <option value="ahorros">ahorros</option>
@@ -30,28 +32,44 @@
                         </select>
                         <button type="submit" class="btn btn-secondary">Filtrar</button>
                     </form>
+                </div>
+            </div>
 
+            <div class="card border border-2 mx-auto">
+                <h5 class="card-header" role="button" data-toggle="collapse" data-target="#filtroRango" aria-expanded="false" aria-controls="filtroRango">
+                    Filtrar por rango saldos
+                </h5>
+
+                <div id="filtroRango" class="collapse">
                     <form th:action="@{/cuentas/cliente}" method="get">
                         <label for="num_doc_cliente">num doc cliente</label>
                         <input type="text" class="form-control" id="num_doc_cliente" name="num_doc_cliente" required>
-                        <label>Fitrar por rango saldos:</label>
                         <label for="saldo-minimo">Saldo minimo:</label>
                         <input type="text" class="form-control" id="saldo-minimo" name="min_saldo" required>
                         <label for="saldo-maximo">Saldo maximo:</label>
                         <input type="text" class="form-control" id="saldo-maximo" name="max_saldo" required>
                         <button type="submit" class="btn btn-secondary">Filtrar</button>
                     </form>
+                </div>
+            </div>
 
+            <div class="card border border-2 mx-auto">
+                <h5 class="card-header" role="button" data-toggle="collapse" data-target="#filtroTransc" aria-expanded="false" aria-controls="filtroTransc">
+                    Filtrar por ultima transaccion
+                </h5>
+
+                <div id="filtroTransc" class="collapse">
                     <form th:action="@{/cuentas/cliente}" method="get">
                         <label for="num_doc_cliente">num doc cliente</label>
                         <input type="text" class="form-control" id="num_doc_cliente" name="num_doc_cliente" required>
-                        <label>Fitrar por fecha ultima transaccion:</label>
                         <label for="fecha-ultima-transaccion">Fecha:</label>
                         <input class="form-control" type="text" id="fecha-ultima-transaccion" name="ultima_transaccion" required>
                         <button type="submit" class="btn btn-secondary">Filtrar</button>
                     </form>
                 </div>
             </div>
+
+        
         </div>
 
 
